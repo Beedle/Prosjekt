@@ -11,3 +11,16 @@
 *.lai
 *.la
 *.a
+
+*.exe
+*.sln
+*.sdf
+*.vcxproj
+*.filters
+*.tlog
+*.obj
+*.pdb
+*.idb
+*.ilk
+*.suo
+*.opensdf
