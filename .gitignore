@@ -13,10 +13,7 @@
 *.a
 
 *.exe
-*.sln
 *.sdf
-*.vcxproj
-*.filters
 *.tlog
 *.obj
 *.pdb
