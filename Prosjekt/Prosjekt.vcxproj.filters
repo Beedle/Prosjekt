@@ -18,10 +18,10 @@
     <ClCompile Include="Main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="timer2.cpp">
+    <ClCompile Include="listtool2.cpp">
       <Filter>Resource Files</Filter>
     </ClCompile>
-    <ClCompile Include="listtool2.cpp">
+    <ClCompile Include="timer2.cpp">
       <Filter>Resource Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -30,6 +30,21 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="listtool2.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Header.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Rom.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Hotell.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Reservasjon.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Regning.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

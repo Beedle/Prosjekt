@@ -83,7 +83,12 @@
     <ClCompile Include="timer2.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Header.h" />
+    <ClInclude Include="Hotell.h" />
     <ClInclude Include="listtool2.h" />
+    <ClInclude Include="Regning.h" />
+    <ClInclude Include="Reservasjon.h" />
+    <ClInclude Include="Rom.h" />
     <ClInclude Include="timer2.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
