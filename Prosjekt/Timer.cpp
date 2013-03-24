@@ -1,6 +1,5 @@
-
 #include <ctime>              //  tm-struct, time-funksjoner
-#include "timer2.h"           //  (Denne filens deklarasjoner)
+#include "Timer.h"			  //  (Denne filens deklarasjoner)
 
 
 // **************************************************************************
@@ -143,3 +142,4 @@ void Timer::konverter(int t, int& da, int& ma, int& aa)  {
   ma = (t - (aa * 10000)) / 100;
   da = t % 100;
 }
+

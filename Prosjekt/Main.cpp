@@ -1,13 +1,13 @@
 //Gruppe 9
-//Frode sine .cpp filer kresjer programmet...
+
+#include <iostream>
+using namespace std;
 
 
-//alle headerne på egen fil.
-#include "Header.h"
+int main(){
 
+	cout << "Hello World!" << endl;
 
-int main() {
-	
-	cout << "Hello World" << endl;
+	system ("PAUSE");
 	return 0;
 }
