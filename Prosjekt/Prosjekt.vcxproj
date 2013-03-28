@@ -63,12 +63,33 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Dobbel.cpp" />
+    <ClCompile Include="Global.cpp" />
+    <ClCompile Include="Hotell.cpp" />
     <ClCompile Include="Listtool.cpp" />
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="Pris.cpp" />
+    <ClCompile Include="Regning.cpp" />
+    <ClCompile Include="Reg_Post.cpp" />
+    <ClCompile Include="Reservasjon.cpp" />
+    <ClCompile Include="Rom.cpp" />
+    <ClCompile Include="Singel.cpp" />
+    <ClCompile Include="Suite.cpp" />
     <ClCompile Include="Timer.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Const.h" />
+    <ClInclude Include="Dobbel.h" />
+    <ClInclude Include="Global.h" />
+    <ClInclude Include="Hotell.h" />
     <ClInclude Include="Listtool.h" />
+    <ClInclude Include="Pris.h" />
+    <ClInclude Include="Regning.h" />
+    <ClInclude Include="Reg_Post.h" />
+    <ClInclude Include="Reservasjon.h" />
+    <ClInclude Include="Rom.h" />
+    <ClInclude Include="Singel.h" />
+    <ClInclude Include="Suite.h" />
     <ClInclude Include="Timer.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

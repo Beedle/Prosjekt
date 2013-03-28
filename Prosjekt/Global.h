@@ -1,0 +1,8 @@
+//Globale funksjoner
+
+
+#pragma once
+
+
+
+

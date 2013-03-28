@@ -1,15 +1,45 @@
-﻿Build started 24.03.2013 01:32:30.
+﻿Build started 28.03.2013 23:54:48.
      1>Project "C:\Users\Spoki0\Documents\GitHub\Prosjekt\Prosjekt\Prosjekt.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc110.pdb" /Gd /TP /analyze- /errorReport:prompt Main.cpp
-         Main.cpp
+         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc110.pdb" /Gd /TP /analyze- /errorReport:prompt Dobbel.cpp Global.cpp Hotell.cpp Pris.cpp Regning.cpp Reg_Post.cpp Reservasjon.cpp Rom.cpp Singel.cpp Suite.cpp
+         Reg_Post.cpp
+         Pris.cpp
+         Global.cpp
+         Generating Code...
+         Compiling...
+         Dobbel.cpp
+         Generating Code...
+         Compiling...
+         Suite.cpp
+         Singel.cpp
+         Rom.cpp
+         Generating Code...
+         Compiling...
+         Hotell.cpp
+         Generating Code...
+         Compiling...
+         Regning.cpp
+         Generating Code...
+         Compiling...
+         Reservasjon.cpp
+         Generating Code...
        Link:
-         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\Spoki0\Documents\GitHub\Prosjekt\Debug\Prosjekt.exe" /INCREMENTAL /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\Spoki0\Documents\GitHub\Prosjekt\Debug\Prosjekt.pdb" /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\Spoki0\Documents\GitHub\Prosjekt\Debug\Prosjekt.lib" /MACHINE:X86 Debug\Listtool.obj
+         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\Spoki0\Documents\GitHub\Prosjekt\Debug\Prosjekt.exe" /INCREMENTAL /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\Spoki0\Documents\GitHub\Prosjekt\Debug\Prosjekt.pdb" /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\Spoki0\Documents\GitHub\Prosjekt\Debug\Prosjekt.lib" /MACHINE:X86 Debug\Dobbel.obj
+         Debug\Global.obj
+         Debug\Hotell.obj
+         Debug\Listtool.obj
          Debug\Main.obj
+         Debug\Pris.obj
+         Debug\Regning.obj
+         Debug\Reg_Post.obj
+         Debug\Reservasjon.obj
+         Debug\Rom.obj
+         Debug\Singel.obj
+         Debug\Suite.obj
          Debug\Timer.obj
          Prosjekt.vcxproj -> C:\Users\Spoki0\Documents\GitHub\Prosjekt\Debug\Prosjekt.exe
      1>Done Building Project "C:\Users\Spoki0\Documents\GitHub\Prosjekt\Prosjekt\Prosjekt.vcxproj" (Build target(s)).
 
 Build succeeded.
 
-Time Elapsed 00:00:02.36
+Time Elapsed 00:00:16.03

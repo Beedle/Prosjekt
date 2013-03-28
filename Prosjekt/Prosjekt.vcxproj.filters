@@ -13,24 +13,96 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Header Files\Rom">
+      <UniqueIdentifier>{70203c0e-2b9b-48af-8812-b7a115755a06}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Rom">
+      <UniqueIdentifier>{95918fb3-a497-410e-b11f-658bc39bdf58}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Frode">
+      <UniqueIdentifier>{c822f4fc-eeca-449c-a77f-8d79eeff8e09}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Listtool.cpp">
+      <Filter>Resource Files</Filter>
+    </ClCompile>
     <ClCompile Include="Timer.cpp">
+      <Filter>Resource Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Hotell.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Listtool.cpp">
+    <ClCompile Include="Regning.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Reservasjon.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Dobbel.cpp">
+      <Filter>Source Files\Rom</Filter>
+    </ClCompile>
+    <ClCompile Include="Rom.cpp">
+      <Filter>Source Files\Rom</Filter>
+    </ClCompile>
+    <ClCompile Include="Singel.cpp">
+      <Filter>Source Files\Rom</Filter>
+    </ClCompile>
+    <ClCompile Include="Suite.cpp">
+      <Filter>Source Files\Rom</Filter>
+    </ClCompile>
+    <ClCompile Include="Pris.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Reg_Post.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Global.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Timer.h">
+    <ClInclude Include="Hotell.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Listtool.h">
+    <ClInclude Include="Regning.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Reservasjon.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Rom.h">
+      <Filter>Header Files\Rom</Filter>
+    </ClInclude>
+    <ClInclude Include="Singel.h">
+      <Filter>Header Files\Rom</Filter>
+    </ClInclude>
+    <ClInclude Include="Suite.h">
+      <Filter>Header Files\Rom</Filter>
+    </ClInclude>
+    <ClInclude Include="Dobbel.h">
+      <Filter>Header Files\Rom</Filter>
+    </ClInclude>
+    <ClInclude Include="Pris.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Reg_Post.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Global.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Const.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Timer.h">
+      <Filter>Header Files\Frode</Filter>
+    </ClInclude>
+    <ClInclude Include="Listtool.h">
+      <Filter>Header Files\Frode</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
