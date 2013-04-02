@@ -22,16 +22,13 @@
     <Filter Include="Header Files\Frode">
       <UniqueIdentifier>{c822f4fc-eeca-449c-a77f-8d79eeff8e09}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Frode">
+      <UniqueIdentifier>{b61454ef-e0c2-40e2-aacd-8dbb59c2ab25}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
       <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Listtool.cpp">
-      <Filter>Resource Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Timer.cpp">
-      <Filter>Resource Files</Filter>
     </ClCompile>
     <ClCompile Include="Hotell.cpp">
       <Filter>Source Files</Filter>
@@ -62,6 +59,12 @@
     </ClCompile>
     <ClCompile Include="Global.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Timer.cpp">
+      <Filter>Source Files\Frode</Filter>
+    </ClCompile>
+    <ClCompile Include="Listtool.cpp">
+      <Filter>Source Files\Frode</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
