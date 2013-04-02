@@ -108,4 +108,9 @@
       <Filter>Header Files\Frode</Filter>
     </ClInclude>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Bordell.DTA">
+      <Filter>Resource Files</Filter>
+    </None>
+  </ItemGroup>
 </Project>
