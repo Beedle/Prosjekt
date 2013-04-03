@@ -81,6 +81,7 @@
     <ClInclude Include="Const.h" />
     <ClInclude Include="Dobbel.h" />
     <ClInclude Include="Global.h" />
+    <ClInclude Include="Header.h" />
     <ClInclude Include="Hotell.h" />
     <ClInclude Include="Listtool.h" />
     <ClInclude Include="Pris.h" />
@@ -94,6 +95,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Bordell.DTA" />
+    <None Include="Dummy.DTA" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

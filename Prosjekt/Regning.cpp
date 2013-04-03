@@ -1,3 +1,1 @@
-#include "Regning.h"
-
-
+#include "Header.h"

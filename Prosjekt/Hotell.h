@@ -3,6 +3,7 @@
 #pragma once
 
 #include <string>
+#include <fstream>
 
 using namespace std;
 
@@ -10,16 +11,20 @@ class Hotell {
 	private:
 		string navn;
 		string addresse;
-		string epost;
+		string mail;
 		string filnavn;
 
+		int postnummer;
 		int telefon;
 		int fax;
-		int prisFrokost;
-		int prisEkstraSeng;
+		int frokost;
+		int seng;
+
 		int antFasciliteter;
 
 	public:
+		Hotell(string file);
 
+		void Data();
 
 };

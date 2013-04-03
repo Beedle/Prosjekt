@@ -1,10 +1,7 @@
 //Globale funksjoner
 
 
-#include "Global.h"
-
-#include <conio.h>
-#include <iostream>
+#include "Header.h"
 
 using namespace std;
 
@@ -37,6 +34,8 @@ void menu(){
 	cout << "\tH - Bytte hotell" << endl;
 
 	cout << "\n\tQ - Avslutte programmet";
+
+	cout << "\n\nKommando: ";
 }
 
 
@@ -55,12 +54,20 @@ char les(bool type){
 	else{x = 65; y = 90;}
 	
 	//leser ett tegn til det er gyldig.
-	cout << "\nKommando: ";
 	do{
 		trash = toupper(_getch());
-	}while (trash < char(x) || trash > char(y));
+	}while ((trash < char(x) || trash > char(y)) &&  trash != 'Q' );
 
 	//skriver ut og returnerer tegnet.
-	cout << trash << endl;
+	cout << trash;
 	return trash;
+}
+
+
+
+//henter navnet på filen til ett hotell.
+string getfil(){
+
+	//Dummy for test.
+	return "Dummy";
 }

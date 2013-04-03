@@ -1,35 +1,38 @@
 //Gruppe 9
 
-#include "Global.h"
-
-#include <iostream>
+#include "Header.h"
 
 using namespace std;
+
+
+Hotell *hotell;
 
 int main(){
 
 	char kommando;
+	
+	hotell = new Hotell(getfil());
 
 	do{
 
 		menu();
 		switch(kommando = les(false)){
 
-			case 'B':
-			case 'A':
-			case 'I':
-			case 'U':
-			case 'R':
-			case 'T':
-			case 'H':
+			case 'B': break;
+			case 'A': break;
+			case 'I': break;
+			case 'U': break;
+			case 'R': break;
+			case 'T': break;
+			case 'H': break;
 
 			case 'E':
 				cout << " ";
 				switch(kommando = les(true)){
 
-					case '1':
-					case '2':
-					case '3':
+					case '1': break;
+					case '2': break;
+					case '3': break;
 					default: break;
 				}
 
@@ -37,13 +40,13 @@ int main(){
 				cout << " ";
 				switch (kommando = les(true)){
 
-					case '1':
-					case '2':
-					case '3':
-					case '4':
-					case '5':
-					case '6':
-					case '7':
+					case '1': hotell->Data(); break;
+					case '2': break;
+					case '3': break;
+					case '4': break;
+					case '5': break;
+					case '6': break;
+					case '7': break;
 					default: break;
 				}
 
@@ -53,8 +56,7 @@ int main(){
 	} while (kommando != 'Q');
 
 
-
-
-	system ("PAUSE");
+	cout << "\n\nAvslutter program..." << endl;
+	system("PAUSE");
 	return 0;
 }
