@@ -7,10 +7,14 @@ using namespace std;
 
 Hotell *hotell;
 
+
+
 int main(){
 
 	char kommando;
 	
+	//begynner med å åpne ett hotell.
+	//Dummy og test er eneste med data atm.
 	hotell = new Hotell(getfil());
 
 	do{
@@ -24,7 +28,11 @@ int main(){
 			case 'U': break;
 			case 'R': break;
 			case 'T': break;
-			case 'H': break;
+			case 'H':
+				//sletter hotell objektet og oppretter et nytt et.
+				delete hotell;
+				hotell = new Hotell(getfil());
+				break;
 
 			case 'E':
 				cout << " ";
@@ -59,4 +67,16 @@ int main(){
 	cout << "\n\nAvslutter program..." << endl;
 	system("PAUSE");
 	return 0;
+
 }
+
+
+
+
+
+
+
+
+
+
+

@@ -20,7 +20,10 @@ class Hotell {
 		int frokost;
 		int seng;
 
-		int antFasciliteter;
+		List *fascilitet;
+
+		//rom[0] for vanlig, [1] for dobbeltrom og [2] for sutie.
+		List *rom[3];
 
 	public:
 		Hotell(string file);

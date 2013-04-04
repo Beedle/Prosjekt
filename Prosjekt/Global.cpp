@@ -64,10 +64,56 @@ char les(bool type){
 }
 
 
+//leser en tekststreng med gitt ledetekst.
+string les(const char txt[]){
+
+	string temp;
+
+	//skriver ut ledeteksten og leser strengen
+	//helt til strengen er lengre enn 1.
+	do{
+		cout << txt << " ";
+		getline(cin, temp);
+	} while (temp.length() < 1);
+
+	return temp;
+}
+
 
 //henter navnet på filen til ett hotell.
 string getfil(){
+	
+	string filnavn;
+	string hotellnavn;
+	string input;
+	
 
-	//Dummy for test.
-	return "Dummy";
+	
+	do{
+
+		//leser navnet på hotellet
+		//og åpner filen med navnene.
+		input = les("Navn på hotellet");
+		ifstream fil ("Hoteller.DTA");
+
+		do{
+
+			//for alle punktene leses forkortet navn
+			//og fult navn.
+			fil >> filnavn; fil.ignore();
+			getline(fil, hotellnavn);
+
+			//sammenligner fult navn med input.
+			//om like returneres input strengen.
+			if(!input.compare(hotellnavn)){
+				return input;
+			}
+
+
+		//når filen slutter kommer en feilmelding.
+		}while (!fil.eof());
+		cout << "Ikke noe hotell som svarer til det navnet, prøv igjen." << endl;
+
+	//kjører forevur :D
+	}while (true);
 }

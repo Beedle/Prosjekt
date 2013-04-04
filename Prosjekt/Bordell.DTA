@@ -6,17 +6,14 @@ Frokost-pris ekstra-seng-pris ant-fascilliteter
 	beskrivelse av den andre fasciliteten
 	osv osv osv
 antall-enkeltrom
-	romnummer1
-		data...
-		data...
-	romnummer2
-		data...
-		data...
+	romnummer1 antall-senger frokost antall-reservasjoner
+		reservasjon1
+		reservasjon2
 antall-dobbeltrom
-	dobbeltrom1
-		data...
-		data...
+	dobbeltrom1 antall-senger ekstra-seng frokost antall-reservasjoner
+		reservasjon1
+		reservasjon2
 antall-suiter
-	suite1
-		data...
-		data...
+	suite1 antall-senger +-senger kvadratmeter frokost antall-reservasjoner beskrivelse
+		reservasjon1
+		reservasjon2

@@ -118,5 +118,8 @@
     <None Include="Dummy.DTA">
       <Filter>Resource Files</Filter>
     </None>
+    <None Include="Hoteller.DTA">
+      <Filter>Resource Files</Filter>
+    </None>
   </ItemGroup>
 </Project>
