@@ -121,5 +121,8 @@
     <None Include="Hoteller.DTA">
       <Filter>Resource Files</Filter>
     </None>
+    <None Include="Reg_Post.DTA">
+      <Filter>Resource Files</Filter>
+    </None>
   </ItemGroup>
 </Project>

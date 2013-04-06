@@ -27,7 +27,7 @@ Rom::Rom(int ID, ifstream &file):Num_element(ID){
 //selvforklarende
 void Rom::display(){
 
-	cout << "\nRomnummer: " << number << endl;
+	cout << "\n\nRomnummer: " << number << endl;
 	cout << "\tAntall senger: " << antSenger << endl;
 	
 	cout << "\tFrokost er ";

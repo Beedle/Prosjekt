@@ -22,7 +22,7 @@ void Suite::toFile(ofstream &file){
 	Rom::toFile(file);
 	antSenger += 4;
 
-	cout << " " << kvm << " " << beskrivelse;
+	file << " " << kvm << " " << beskrivelse;
 }
 
 
@@ -31,6 +31,6 @@ void Suite::display(){
 	
 	Rom::display();
 
-	cout << "Suiten er " << kvm << " stor." << endl;
-	cout << beskrivelse << endl;
+	cout << "Suiten er " << kvm << " kvadratmeter" << endl;
+	cout << beskrivelse << "\n\n";
 }

@@ -16,8 +16,7 @@ int main(){
 	//begynner med å åpne ett hotell.
 	//Dummy og test er eneste med data atm.
 	hotell = new Hotell(getfil());
-	hotell->tilfil();
-	
+
 
 	do{
 
@@ -56,9 +55,10 @@ int main(){
 				switch (kommando = les(true)){
 
 						//viser data om hotellet.
-					case '1': hotell->Data(); break;
+					case '1': hotell->display(); break;
 
-					case '2': break;
+						//viser data om alle suitene
+					case '2': hotell->displaySuite(); break;
 					case '3': break;
 					case '4': break;
 					case '5': break;

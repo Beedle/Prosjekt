@@ -34,6 +34,7 @@ class Hotell {
 
 		void tilfil();
 
-		void Data();
+		void display();
+		void displaySuite();
 
 };
