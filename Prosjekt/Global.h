@@ -18,4 +18,5 @@ void menu();
 
 void fraFil(string file, Hotell *hotell);
 
+//henter respektiv fil.
 string getfil();

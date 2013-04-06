@@ -21,12 +21,14 @@ class Hotell {
 		int seng;
 		int antFascilliteter;
 
+		//10, bare for en midlertidig max.
 		string fascilliteter[10];
 
 		//rom[0] for vanlig, [1] for dobbeltrom og [2] for sutie.
 		List *rom[3];
 
 	public:
+		//constructor som tar filnavn som parameter.
 		Hotell(string file);
 		~Hotell();
 

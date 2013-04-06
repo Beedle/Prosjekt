@@ -74,6 +74,9 @@ Hotell::Hotell(string file){
 	}
 }
 
+
+//dekonstructoren gjør ikke noe mer spennende enn å
+//skrive til fil atm. Bør sikkert slette div objekter.
 Hotell::~Hotell(){
 
 	tilfil();
@@ -81,33 +84,34 @@ Hotell::~Hotell(){
 }
 
 
+//skriver data til fil.
 void Hotell::tilfil(){
 
+	//filnavnet er egen variabel.
 	ofstream fil (filnavn+".DTA");
 
+	//Statisk data
 	fil << navn << endl;
 	fil << postnummer << " " << addresse << endl;
 	fil << telefon << " " << fax << " " << mail << endl;
 	fil << frokost << " " << seng << " " << antFascilliteter << endl;
 
+	//beskrivelse av fascillitetene.
 	for(int x = 1; x <= antFascilliteter; x++){
 		fil << fascilliteter[x] << endl;
 	}
 
 
+	//data om alle singelrom skriver seg selv.
 	Singel *tempSingel;
 	fil << rom[0]->no_of_elements() << endl;
 	for (int x = 1; x <= rom[0]->no_of_elements(); x++){
 
 		tempSingel = (Singel*)rom[0]->remove_no(x);
 		rom[0]->add(tempSingel);
-
 		tempSingel->toFile(fil);
-
-
+		fil << endl;
 	}
-
-
 
 
 }

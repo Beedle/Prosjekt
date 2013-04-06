@@ -19,9 +19,12 @@ class Rom: public Num_element {
 		List *reservasjoner;
 
 	public:
+		//constructor med ID of fil.
 		Rom(int ID, ifstream &file);
 
+		//skriver til fil.
 		void toFile(ofstream &file);
 	
+		//Viser data
 		void display();
 };

@@ -3,22 +3,28 @@
 using namespace std;
 
 
-
+//constructor, sender ID videre
 Rom::Rom(int ID, ifstream &file):Num_element(ID){
 
-	file >> antSenger >> inklFrokost;
+	//lager en ny liste med reservasjoner
 	reservasjoner = new List(Sorted);
 
+	//leser inn antallet reservasjoner og reservasjonene
 	int trash;
 	file >> trash; file.ignore();
 	for(int x = 1; x <= trash; x++){
 
-		//leser inn reservasjoner.
+		//leser inn hvordan pokker reservasjonen blir seende ut.
 	}
+
+
+	//leser inn antall senger for rommet og om frokost er inkludert
+	file >> antSenger >> inklFrokost;
 
 }
 
 
+//selvforklarende
 void Rom::display(){
 
 	cout << "\nRomnummer: " << number << endl;
@@ -30,9 +36,19 @@ void Rom::display(){
 
 }
 
+
+//skriver til fil.
 void Rom::toFile(ofstream &file){
 
-	file << number << " " << antSenger << " " << inklFrokost << " "
-		 << reservasjoner->no_of_elements() << endl;
+	//romnummer og antallet reservasjoner.
+	file << number << " " << reservasjoner->no_of_elements() << endl;
+
+	for(int x = 1; x <= reservasjoner->no_of_elements(); x++){
+		//skriver reservasjonene til fil.
+		// * må slutte med endl;
+	}
+
+
+	file << antSenger << " " << inklFrokost;
 
 }

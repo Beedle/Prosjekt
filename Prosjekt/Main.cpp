@@ -16,6 +16,7 @@ int main(){
 	//begynner med å åpne ett hotell.
 	//Dummy og test er eneste med data atm.
 	hotell = new Hotell(getfil());
+	hotell->tilfil();
 	
 
 	do{
@@ -28,11 +29,14 @@ int main(){
 			case 'I': break;
 			case 'U': break;
 			case 'R': break;
-			case 'T': hotell->tilfil(); break;
 
+				//skriver data til fil.
+			case 'T': 
+				hotell->tilfil();
+				break;
 
-			case 'H':
 				//sletter hotell objektet og oppretter et nytt et.
+			case 'H':
 				delete hotell;
 				hotell = new Hotell(getfil());
 				break;
@@ -51,7 +55,9 @@ int main(){
 				cout << " ";
 				switch (kommando = les(true)){
 
+						//viser data om hotellet.
 					case '1': hotell->Data(); break;
+
 					case '2': break;
 					case '3': break;
 					case '4': break;
