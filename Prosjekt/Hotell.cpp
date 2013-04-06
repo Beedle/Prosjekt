@@ -6,6 +6,24 @@ using namespace std;
 
 
 
+//Skriver ut data om hotellet.
+void Hotell::Data(){
+
+	cout << "\n\n" << navn << endl;
+	cout << "Kontakt" << endl;
+	cout << "\tTelefon: " << telefon << endl;
+	cout << "\tFax: " << fax << endl;
+	cout << "\tPostaddresse: " << addresse << " " << postnummer << endl;
+
+	cout << "\nFascilliteter" << endl;
+	for (int x = 1; x <= antFascilliteter; x++){
+		cout << "\t" << fascilliteter[x] << endl;
+	}
+	cout << "\n\n";
+	_getche();
+	
+}
+
 //Hotell leser selv inn data fra fil.
 Hotell::Hotell(string file){
 	
@@ -28,7 +46,12 @@ Hotell::Hotell(string file){
 		getline(fil, mail);
 
 		//priser for frokost og seng samt antallet fascilliteter
-		fil >> frokost >> seng;
+		fil >> frokost >> seng >> antFascilliteter;
+		fil.ignore();
+
+		for (int x = 1; x <= antFascilliteter; x++){
+			getline(fil, fascilliteter[x]);
+		}
 
 		//masse variabler som brukes til å mellomlagre data.
 		int trash;
@@ -36,77 +59,55 @@ Hotell::Hotell(string file){
 		Dobbel *tempDobbel;
 		Suite  *tempSuite;
 
-		int romnummer;
-		int senger;
-		bool seng;
-		bool frokost;
-		int res;
-		int kvm;
-	
+		int ID;		
+
 		//oppretter liste for singelrom
 		//og leser inn data om alle rommene.
 		rom[0] = new List(Sorted);
 		fil >> trash;
 		for (int x = 1; x <= trash; x++){
 
-			fil >> romnummer >> senger >> frokost;
-			tempSingel = new Singel(romnummer, senger, frokost);
+			fil >> ID;
+			tempSingel = new Singel(ID, fil);
 			rom[0]->add(tempSingel);
-
-			fil >> res;
-			for(int y = 1; y <= res; y++){
-				//lese inn reservasjon.
-			}
-
 		}
-
-		//rom[1] = new List(Sorted);
-		//fil >> trash;
-		//for (int x = 1; x <= trash; x++){
-
-		//	fil >> romnummer >> senger >> seng >> frokost;
-		//	tempDobbel = new Dobbel(romnummer, senger, frokost);
-		//	rom[0]->add(tempDobbel);
-
-		//	fil >> res;
-		//	for(int y = 1; y <= res; y++){
-		//		//lese inn reservasjon.
-		//	}
-
-		//}
-
-
-		//rom[2] = new List(Sorted);
-		//fil >> trash;
-		//for (int x = 1; x <= trash; x++){
-
-		//	fil >> romnummer >> senger >> frokost;
-		//	tempSuite = new Suite(romnummer, senger, frokost);
-		//	rom[0]->add(tempSuite);
-
-		//	fil >> res;
-		//	for(int y = 1; y <= res; y++){
-		//		//lese inn reservasjon.
-		//	}
-
-		//}
-
-	
-	
 	}
 }
 
+Hotell::~Hotell(){
+
+	tilfil();
+
+}
 
 
-//Skriver ut data om hotellet.
-void Hotell::Data(){
+void Hotell::tilfil(){
 
-	cout << "\n\t" << navn << endl;
-	cout << "\tKontakt" << endl;
-	cout << "\t\tTelefon: " << telefon << endl;
-	cout << "\t\tFax: " << fax << endl;
-	cout << "\t\tPostaddresse: " << addresse << " " << postnummer << endl;
+	ofstream fil (filnavn+".DTA");
 
-	cout << "\n\tFascilliteter" << endl;
-	
+	fil << navn << endl;
+	fil << postnummer << " " << addresse << endl;
+	fil << telefon << " " << fax << " " << mail << endl;
+	fil << frokost << " " << seng << " " << antFascilliteter << endl;
+
+	for(int x = 1; x <= antFascilliteter; x++){
+		fil << fascilliteter[x] << endl;
+	}
+
+
+	Singel *tempSingel;
+	fil << rom[0]->no_of_elements() << endl;
+	for (int x = 1; x <= rom[0]->no_of_elements(); x++){
+
+		tempSingel = (Singel*)rom[0]->remove_no(x);
+		rom[0]->add(tempSingel);
+
+		tempSingel->toFile(fil);
+
+
+	}
+
+
+
+
 }

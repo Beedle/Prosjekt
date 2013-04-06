@@ -7,6 +7,7 @@
 
 #include "Rom.h"
 
+#include <fstream>
 
 
 using namespace std;
@@ -16,7 +17,9 @@ class Singel: public Rom {
 	protected:
 
 	public:
-		Singel(int romnummer, int senger, bool frokost);
+		Singel(int ID, ifstream &file);
 
 		void display();
+
+		void toFile(ofstream &file);
 };

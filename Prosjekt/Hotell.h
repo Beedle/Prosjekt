@@ -19,14 +19,18 @@ class Hotell {
 		int fax;
 		int frokost;
 		int seng;
+		int antFascilliteter;
 
-		List *fascilitet;
+		string fascilliteter[10];
 
 		//rom[0] for vanlig, [1] for dobbeltrom og [2] for sutie.
 		List *rom[3];
 
 	public:
 		Hotell(string file);
+		~Hotell();
+
+		void tilfil();
 
 		void Data();
 

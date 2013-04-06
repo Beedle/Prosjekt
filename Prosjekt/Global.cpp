@@ -104,9 +104,9 @@ string getfil(){
 			getline(fil, hotellnavn);
 
 			//sammenligner fult navn med input.
-			//om like returneres input strengen.
+			//om like returneres filnavnet
 			if(!input.compare(hotellnavn)){
-				return input;
+				return filnavn;
 			}
 
 

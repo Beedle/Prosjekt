@@ -10,9 +10,6 @@
 
 
 
-
-
-
 using namespace std;
 
 class Rom: public Num_element {
@@ -22,7 +19,9 @@ class Rom: public Num_element {
 		List *reservasjoner;
 
 	public:
-		Rom(int romnummer, int senger, bool frokost);
+		Rom(int ID, ifstream &file);
+
+		void toFile(ofstream &file);
 	
 		void display();
 };

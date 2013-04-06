@@ -16,6 +16,7 @@ int main(){
 	//begynner med å åpne ett hotell.
 	//Dummy og test er eneste med data atm.
 	hotell = new Hotell(getfil());
+	
 
 	do{
 
@@ -27,7 +28,9 @@ int main(){
 			case 'I': break;
 			case 'U': break;
 			case 'R': break;
-			case 'T': break;
+			case 'T': hotell->tilfil(); break;
+
+
 			case 'H':
 				//sletter hotell objektet og oppretter et nytt et.
 				delete hotell;

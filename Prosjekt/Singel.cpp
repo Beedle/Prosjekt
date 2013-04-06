@@ -8,12 +8,19 @@ using namespace std;
 
 
 
-Singel::Singel(int romnummer, int senger, bool frokost):Rom(romnummer, senger, frokost){
+Singel::Singel(int ID, ifstream &file):Rom(ID, file){
 	
 
 }
 
+
 void Singel::display(){
 	Rom::display();
+
+}
+
+void Singel::toFile(ofstream &file){
+
+	Rom::toFile(file);
 
 }
