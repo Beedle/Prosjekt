@@ -79,41 +79,34 @@ Hotell::Hotell(string file){
 		Dobbel *tempDobbel;
 		Suite  *tempSuite;
 
+		for(int y = 0; y < 3; y++){
+
+			//oppretter liste for romtypene
+			//og leser inn antallet rom av gitt type
+			rom[y] = new List(Sorted);
+			fil >> trash;
+			for (int x = 1; x <= trash; x++){
+
+				//romnummer
+				fil >> ID;
+
+				//oppretter objekt og stapper det inn i gitt liste
+				if(y == 0){
+					tempSingel = new Singel(ID, fil);
+					rom[y]->add(tempSingel);
+				}
 				
+				else if (y == 1){
+					tempDobbel = new Dobbel(ID, fil);
+					rom[y]->add(tempDobbel);
+				}
+				
+				else if (y == 2){
+					tempSuite = new Suite (ID, fil);
+					rom[y]->add(tempSuite);
+				}
 
-		//oppretter liste for singelrom
-		//og leser inn data om alle rommene.
-		rom[0] = new List(Sorted);
-		fil >> trash;
-		for (int x = 1; x <= trash; x++){
-
-			fil >> ID;
-			tempSingel = new Singel(ID, fil);
-			rom[0]->add(tempSingel);
-		}
-
-
-		//oppretter liste for singelrom
-		//og leser inn data om alle rommene.
-		rom[1] = new List(Sorted);
-		fil >> trash;
-		for (int x = 1; x <= trash; x++){
-
-			fil >> ID;
-			tempDobbel = new Dobbel(ID, fil);
-			rom[1]->add(tempDobbel);
-		}
-
-
-		//oppretter liste for singelrom
-		//og leser inn data om alle rommene.
-		rom[2] = new List(Sorted);
-		fil >> trash;
-		for (int x = 1; x <= trash; x++){
-
-			fil >> ID;
-			tempSuite = new Suite(ID, fil);
-			rom[2]->add(tempSuite);
+			}
 		}
 
 	}
@@ -147,38 +140,39 @@ void Hotell::tilfil(){
 	}
 
 
-	//data om alle singelrom skriver seg selv.
-	Singel *tempSingel;
-	fil << rom[0]->no_of_elements() << endl;
-	for (int x = 1; x <= rom[0]->no_of_elements(); x++){
+	for(int y = 0; y < 3; y++){
 
-		tempSingel = (Singel*)rom[0]->remove_no(x);
-		rom[0]->add(tempSingel);
-		tempSingel->toFile(fil);
-		fil << endl;
+		//data om alle singelrom skriver seg selv.
+
+		
+		Singel *tempSingel;
+		Dobbel *tempDobbel;
+		Suite  *tempSuite;
+		
+		fil << rom[y]->no_of_elements() << endl;
+		for (int x = 1; x <= rom[y]->no_of_elements(); x++){
+
+			if(y == 0){
+				tempSingel = (Singel*)rom[y]->remove_no(x);
+				rom[y]->add(tempSingel);
+				tempSingel->toFile(fil);
+			}
+
+			else if (y == 1){
+				tempDobbel = (Dobbel*)rom[y]->remove_no(x);
+				rom[y]->add(tempDobbel);
+				tempDobbel->toFile(fil);
+			}
+
+			else if (y == 2){
+				tempSuite = (Suite*)rom[y]->remove_no(x);
+				rom[y]->add(tempSuite);
+				tempSuite->toFile(fil);
+			}
+
+			fil << endl;
+		}
+
 	}
-
-
-	Dobbel *tempDobbel;
-	fil << rom[1]->no_of_elements() << endl;
-	for (int x = 1; x <= rom[1]->no_of_elements(); x++){
-
-		tempDobbel = (Dobbel*)rom[1]->remove_no(x);
-		rom[1]->add(tempDobbel);
-		tempDobbel->toFile(fil);
-		fil << endl;
-	}
-
-
-	Suite *tempSuite;
-	fil << rom[2]->no_of_elements() << endl;
-	for (int x = 1; x <= rom[2]->no_of_elements(); x++){
-
-		tempSuite = (Suite*)rom[2]->remove_no(x);
-		rom[2]->add(tempSuite);
-		tempSuite->toFile(fil);
-		fil << endl;
-	}
-
 
 }

@@ -27,4 +27,7 @@ class Rom: public Num_element {
 	
 		//Viser data
 		void display();
+
+		//skriver ut reservasjonene.
+		void reservasjon();
 };

@@ -7,8 +7,13 @@ Frokost-pris ekstra-seng-pris ant-fascilliteter
 	osv osv osv
 antall-enkeltrom
 	romnummer antall-reservasjoner
-		reservasjon1
-		reservasjon2
+		ankomst avreise prisdag1 prisdag2 prisdag3 status-ekstra-seng
+		beboere
+			navn
+			navn
+		antall-regninger
+			pris beskrivelse
+			pris beskrivelse
 	antall-senger frokost
 antall-dobbeltrom
 	romnummer antall-reservasjoner

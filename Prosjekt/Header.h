@@ -1,4 +1,4 @@
-//alle header filene...
+//alle header filene.
 
 //Frode sine filer.
 #include "Listtool.h"
@@ -24,3 +24,5 @@
 #include <fstream>
 #include <string>
 #include <conio.h>
+
+

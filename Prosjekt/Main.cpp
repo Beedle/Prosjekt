@@ -4,15 +4,17 @@
 
 using namespace std;
 
-
+//globale Hotell, Timer og Reg_post objekt
 Hotell *hotell;
+Timer timer;
+Reg_Post regpost;
 
 
 
 int main(){
 
 	char kommando;
-	
+		
 	//begynner med å åpne ett hotell.
 	//Dummy og test er eneste med data atm.
 	hotell = new Hotell(getfil());
@@ -49,6 +51,7 @@ int main(){
 					case '3': break;
 					default: break;
 				}
+				break;
 
 			case 'O':
 				cout << " ";
@@ -66,6 +69,7 @@ int main(){
 					case '7': break;
 					default: break;
 				}
+				break;
 
 			default:break;
 

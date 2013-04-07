@@ -6,7 +6,7 @@ using namespace std;
 
 
 
-
+//leser data fra fil.
 Suite::Suite(int ID, ifstream &file):Rom(ID, file){
 	
 	file >> kvm; file.ignore();
@@ -15,9 +15,11 @@ Suite::Suite(int ID, ifstream &file):Rom(ID, file){
 }
 
 
-
+//skriver til fil;
 void Suite::toFile(ofstream &file){
 
+	//tar - og + 4, sånn at det som blir skrevet til fil
+	//er antallet senger i forhold til 4, som alle suitene har.
 	antSenger -= 4;
 	Rom::toFile(file);
 	antSenger += 4;
@@ -26,11 +28,11 @@ void Suite::toFile(ofstream &file){
 }
 
 
-
+//skriver data
 void Suite::display(){
 	
 	Rom::display();
 
-	cout << "Suiten er " << kvm << " kvadratmeter" << endl;
-	cout << beskrivelse << "\n\n";
+	cout << "\tSuiten er " << kvm << " kvadratmeter" << endl;
+	cout << "\t" << beskrivelse << "\n\n";
 }

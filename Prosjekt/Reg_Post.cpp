@@ -4,11 +4,12 @@
 using namespace std;
 
 
-
+//oppretter Reg_post objekt.
 Reg_Post::Reg_Post(){
 
 	int temp = 0;
 
+	//leser fra fil
 	ifstream fil ("Reg_Post.DTA");
 	if (fil){
 		do{
@@ -17,10 +18,12 @@ Reg_Post::Reg_Post(){
 		}while (!fil.eof());
 	}
 
+	//antallet elementer
 	antall = temp;
 }
 
 
+//skirver info til skjermen.
 void Reg_Post::display(){
 
 	for(int x = 1; x <= antall; x++){

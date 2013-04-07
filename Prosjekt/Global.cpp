@@ -93,7 +93,7 @@ string getfil(){
 
 		//leser navnet på hotellet
 		//og åpner filen med navnene.
-		input = les("Navn på hotellet");
+		input = les("\nNavn på hotellet");
 		ifstream fil ("Hoteller.DTA");
 
 		do{
