@@ -5,6 +5,8 @@
 
 using namespace std;
 
+extern Timer timer;
+
 
 //meget selvforklarende, skriver menyen...
 void menu(){
@@ -116,4 +118,18 @@ string getfil(){
 
 	//kjører forevur :D
 	}while (true);
+}
+
+
+//leser dato som er etter en gitt dato
+int getdate(string txt, int min){
+
+	int trash;
+	do{
+		cout << txt << " på formatet AAAAMMMDD: ";
+		cin >> trash;
+
+	}while (trash < min && !timer.dagnummer(trash));
+
+	return trash;
 }

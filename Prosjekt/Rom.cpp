@@ -38,6 +38,13 @@ void Rom::display(){
 	if(!inklFrokost) cout << "ikke ";
 	cout << "inkludert" << endl;
 
+	Reservasjon *temp;
+	for (int x = 1; x <= reservasjoner->no_of_elements(); x ++){
+		temp = (Reservasjon*)reservasjoner->remove_no(x);
+		reservasjoner->add(temp);
+		temp->display();
+	}
+
 }
 
 
@@ -85,4 +92,20 @@ void Rom::reservasjon(){
 		cout << "\nIngen registrerte reservasjonere." << endl;
 	}
 
+}
+
+
+//returnerer listen i klassen.
+List* Rom::getlist(){
+	return reservasjoner;
+}
+
+//returnerer romnummer
+int Rom::getid(){
+	return number;
+}
+
+//returnerer antallet senger
+int Rom::getsenger(){
+	return antSenger;
 }

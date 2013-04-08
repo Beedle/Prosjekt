@@ -29,13 +29,15 @@ class Reservasjon: public Num_element{
 
 		//navnet på alle beboerene.
 		//10 er midlertidig max
-		string navn[10];
+		//string navn[10];
+		string navn;
 
 		//liste med regninger.
 		List *regninger;
 
 	public:
 		//constructor
+		Reservasjon(int ID, int dpt, int gje);
 		Reservasjon(int ID, ifstream &fil);
 
 		//skriver til fil
@@ -43,4 +45,8 @@ class Reservasjon: public Num_element{
 
 		//skriver ut data
 		void display();
+
+		//henter avreise og ankomst
+		int getAvreise();
+		int getAnkomst();
 };

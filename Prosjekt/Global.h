@@ -14,6 +14,9 @@ using namespace std;
 string les(const char txt[]);
 char les(bool type);
 
+//leser dato, med minimum
+int getdate(string txt, int min);
+
 void menu();
 
 void fraFil(string file, Hotell *hotell);

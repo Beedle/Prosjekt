@@ -34,7 +34,11 @@ class Hotell {
 
 		void tilfil();
 
+		void reserver();
+
+		//viser på skjerm.
 		void display();
 		void displaySuite();
+		void displayrom();
 
 };

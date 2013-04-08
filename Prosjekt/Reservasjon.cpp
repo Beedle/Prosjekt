@@ -6,6 +6,31 @@ using namespace std;
 
 extern Timer timer;
 
+
+//oppretter ny reservasjon. Ankomst, avreise og antallet gjester som parameter
+Reservasjon::Reservasjon(int ID, int dpt, int gje):Num_element(ID){
+
+	//variabler settes lik parametre.
+	beboere = gje;
+	avreise = dpt;
+	
+	//leser inn navn
+	navn = les("Navn det skal reserveres i");
+
+	//antallet overnattinger, og leser pris for hver dag.
+	overnattinger = timer.forskjell_datoer(ID, dpt);
+	for (int x = 0; x <= overnattinger; x++){
+
+		//må endres til å bruke pris objekt.
+		pris[x] = timer.ukedagsnr(ID+x);
+	}
+
+	//oppretter liste
+	regninger = new List(FIFO);
+}
+
+
+
 Reservasjon::Reservasjon(int ID, ifstream &fil):Num_element(ID){
 
 	//avreise dato
@@ -20,9 +45,10 @@ Reservasjon::Reservasjon(int ID, ifstream &fil):Num_element(ID){
 	//status på seng, antallet beboere.
 	//og navn på alle beboerene.
 	fil >> seng >> beboere; fil.ignore();
-	for(int x = 1; x <= beboere; x++){
-		getline(fil, navn[x]);
-	}
+	//for(int x = 1; x <= beboere; x++){
+	//	getline(fil, navn[x]);
+	//}
+	getline(fil, navn);
 
 
 	int trash;
@@ -57,9 +83,10 @@ void Reservasjon::tofile(ofstream &fil){
 	
 	//antallet beboere og navn på de
 	fil << beboere << endl;
-	for (int x = 1; x <= beboere; x++){
-		fil << navn[x] << endl;
-	}
+	//for (int x = 1; x <= beboere; x++){
+	//	fil << navn[x] << endl;
+	//}
+	fil << navn << endl;
 
 
 	//antallet regninger og regningene.
@@ -78,9 +105,35 @@ void Reservasjon::tofile(ofstream &fil){
 //data om reservasjonen.
 void Reservasjon::display(){
 
+	//skriver ut data.
+	cout << "\n\nreservasjon tilhørende: " << navn << endl;
 	cout << "Fra " << number << " til " << avreise << " ("
 		 << overnattinger << " dager)" << endl;
 
-	//mangler data.
+	//Dersom det er registrert noen regninger.
+	if(regninger->no_of_elements()){
+		cout << "\nfølgende regninger: " << endl;
+	}
 
+	//går igjennom alle og skriver de ut.
+	Regning *temp;
+	for (int x = 1; x <= regninger->no_of_elements(); x++){
+		temp = (Regning*)regninger->remove_no(x);
+		regninger->add(temp);
+		cout << "\t";
+		temp->display();
+	}
+
+}
+
+
+
+//henter avreise
+int Reservasjon::getAvreise(){
+	return avreise;
+}
+
+//henter ankomst
+int Reservasjon::getAnkomst(){
+	return number;
 }

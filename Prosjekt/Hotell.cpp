@@ -4,7 +4,7 @@
 
 using namespace std;
 
-
+extern Timer timer;
 
 //Skriver ut data om hotellet.
 void Hotell::display(){
@@ -142,9 +142,7 @@ void Hotell::tilfil(){
 
 	for(int y = 0; y < 3; y++){
 
-		//data om alle singelrom skriver seg selv.
-
-		
+		//data om alle rom skriver seg selv.		
 		Singel *tempSingel;
 		Dobbel *tempDobbel;
 		Suite  *tempSuite;
@@ -175,4 +173,142 @@ void Hotell::tilfil(){
 
 	}
 
+}
+
+
+//opprette en reservasjon
+void Hotell::reserver(){
+
+	//hjelpevariabler
+	int temp;
+	int fra;
+	int til;
+	int ant;
+
+	//leser inn romtype
+	do{
+		cout << "\n\t1 - Singelrom";
+		cout << "\n\t2 - Dobbeltrom";
+		cout << "\n\t3 - Suite\n\n";
+
+		//konverterer fra char til int, -1
+		temp = les(true)-49;
+
+	}while(temp != 0 && temp != 1 && temp != 2);
+
+	//leser ankomst og avreise dato.
+	fra = getdate("\nFra dato", timer.hent_dato());
+	til = getdate("Til dato", fra);
+	
+	//antallet gjester.
+	cout << "Antall gjester: ";
+	cin >> ant;
+
+	//midlertidige objekter.
+	Rom *tempRom;
+	List *list;
+	Reservasjon *res;
+	Reservasjon *tempRes1;
+	Reservasjon *tempRes2;
+
+	//for alle rommene
+	for(int x = 1; x <= rom[temp]->no_of_elements(); x++){
+
+		//henter ett rom fra listen
+		tempRom = (Rom*)rom[temp]->remove_no(x);
+		rom[temp]->add(tempRom);
+
+		//Dersom det er plass på rommet.
+		if(tempRom->getsenger() >= ant){
+
+			//henter listen over reservasjoner, og går igjennom den
+			list = (List*)tempRom->getlist();
+			for(int y = 1; y <= list->no_of_elements(); y++){
+
+				//henter reservasjoner
+				tempRes1 = (Reservasjon*)list->remove_no(y);
+				list->add(tempRes1);
+
+				//sett at reservasjonen har dratt før ny ankomst
+				if(tempRes1->getAvreise() <= fra){
+
+					//dersom det er siste reservasjon, registreres ny
+					if(y == list->no_of_elements()){
+						res = new Reservasjon(fra, til, ant);
+						list->add(res);
+
+						//for å bryte ut av for-løkkene
+						x = rom[temp]->no_of_elements()+1;
+						y = list->no_of_elements()+1;
+
+					}
+					//dersom det er flere reservasjoner
+					else{
+
+						//neste reservasjon hentes
+						tempRes2 = (Reservasjon*)list->remove_no(y+1);
+						list->add(tempRes2);
+
+						//det sjekker om denne ankommer før reservasjonen
+						//som skal registreres reiser, registreres ny.
+						if(tempRes2->getAnkomst() >= til){
+							res = new Reservasjon(fra, til, ant);
+							list->add(res);
+
+							//for å bryte ut av for-løkkene
+							x = rom[temp]->no_of_elements()+1;
+							y = list->no_of_elements()+1;
+						}
+
+					}
+
+				}
+
+			}
+
+			//dersom listen er tom for reservasjoner registreres ny
+			if (!list->no_of_elements()){
+				res = new Reservasjon(fra, til, ant);
+				list->add(res);
+
+				//bryte ut av for-løkken
+				x = rom[temp]->no_of_elements()+1;
+			}
+
+
+		}
+	}
+
+	//feilmelding dersom det ikke finnes noe ledig.
+	if(!rom[temp]->no_of_elements()){
+		cout << "\n\nDesverre ingen ledige rom i den perioden" << endl;
+	}
+}
+
+
+//skriver ut data om ett romnummer
+void Hotell::displayrom(){
+
+	//leser romnummer
+	int trash;
+	cout << "\nRomnummer: ";
+	cin >> trash;
+
+	//går igjennom alle rom i hotellet.
+	Rom *temp;
+	for (int x = 0; x < 3; x++){
+		for(int y = 1; y <= rom[x]->no_of_elements(); y++){
+			
+			//henter ut rommet
+			temp = (Rom*)rom[x]->remove_no(y);
+			rom[x]->add(temp);
+
+			//dersom det er korrekt vises data.
+			if (temp->getid() == trash){
+				temp->display();
+			}
+		}
+	}
+
+	_getch();
 }
