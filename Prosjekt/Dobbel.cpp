@@ -23,7 +23,7 @@ void Dobbel::toFile(ofstream &file){
 
 void Dobbel::display(){
 	
-	Rom::display();
+	Rom::display(false);
 
 	cout << "Det er ";
 	if (!ekstraSeng) cout << "ikke ";

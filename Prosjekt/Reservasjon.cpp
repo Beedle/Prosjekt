@@ -101,27 +101,18 @@ void Reservasjon::tofile(ofstream &fil){
 
 }
 
+//skriver data. all om alle regningene
+void Reservasjon::display(bool all){
 
-//data om reservasjonen.
-void Reservasjon::display(){
-
-	//skriver ut data.
+		//skriver ut data.
 	cout << "\n\nreservasjon tilhørende: " << navn << endl;
 	cout << "Fra " << number << " til " << avreise << " ("
 		 << overnattinger << " dager)" << endl;
 
-	//Dersom det er registrert noen regninger.
-	if(regninger->no_of_elements()){
-		cout << "\nfølgende regninger: " << endl;
-	}
 
-	//går igjennom alle og skriver de ut.
-	Regning *temp;
-	for (int x = 1; x <= regninger->no_of_elements(); x++){
-		temp = (Regning*)regninger->remove_no(x);
-		regninger->add(temp);
-		cout << "\t";
-		temp->display();
+	if(all && regninger->no_of_elements()){
+		cout << "\nfølgende regninger: " << endl;
+		regninger->display_list();
 	}
 
 }
@@ -136,4 +127,9 @@ int Reservasjon::getAvreise(){
 //henter ankomst
 int Reservasjon::getAnkomst(){
 	return number;
+}
+
+//sammenligner navn med input tekst.
+bool Reservasjon::compNavn(string txt){
+	return txt.compare(navn);
 }

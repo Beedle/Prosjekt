@@ -25,8 +25,8 @@ class Rom: public Num_element {
 		//skriver til fil.
 		void toFile(ofstream &file);
 	
-		//Viser data
-		void display();
+		//Viser data om rom
+		void display(bool all);
 		
 		//skriver ut reservasjonene.
 		void reservasjon();

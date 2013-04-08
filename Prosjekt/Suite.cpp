@@ -31,7 +31,7 @@ void Suite::toFile(ofstream &file){
 //skriver data
 void Suite::display(){
 	
-	Rom::display();
+	Rom::display(false);
 
 	cout << "\tSuiten er " << kvm << " kvadratmeter" << endl;
 	cout << "\t" << beskrivelse << "\n\n";

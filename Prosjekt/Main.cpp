@@ -25,12 +25,17 @@ int main(){
 		menu();
 		switch(kommando = les(false)){
 
+				//utfører en reservasjon.
 			case 'B': 
-
 				hotell->reserver();
 				break;
 
-			case 'A': break;
+				//avbestiller reservajsoner, basert på navn
+			case 'A':
+				hotell->avbestille(les("\nI hvilke navn står reservasjonen: "));
+				break;
+
+
 			case 'I': break;
 			case 'U': break;
 			case 'R': break;

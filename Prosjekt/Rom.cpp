@@ -27,10 +27,8 @@ Rom::Rom(int ID, ifstream &file):Num_element(ID){
 
 }
 
-
-//selvforklarende
-void Rom::display(){
-
+//viser data
+void Rom::display(bool all){
 	cout << "\n\nRomnummer: " << number << endl;
 	cout << "\tAntall senger: " << antSenger << endl;
 	
@@ -38,14 +36,22 @@ void Rom::display(){
 	if(!inklFrokost) cout << "ikke ";
 	cout << "inkludert" << endl;
 
-	Reservasjon *temp;
-	for (int x = 1; x <= reservasjoner->no_of_elements(); x ++){
-		temp = (Reservasjon*)reservasjoner->remove_no(x);
-		reservasjoner->add(temp);
-		temp->display();
-	}
+	//dersom alle reservasjonene skulle være med.
+	if (all && reservasjoner->no_of_elements()){
+		Reservasjon *tempRes;
 
+		//går igjennom alle reservasjonene og skriver de ut
+		//inkluderer ikke regningene.
+		cout << "\nFølgende reservasjoner:" << endl;
+		for (int x = 1; x <= reservasjoner->no_of_elements(); x++){
+
+			tempRes = (Reservasjon*)reservasjoner->remove_no(x);
+			reservasjoner->add(tempRes);
+			tempRes->display(false);
+		}
+	}
 }
+
 
 
 //skriver til fil.
@@ -69,30 +75,6 @@ void Rom::toFile(ofstream &file){
 
 }
 
-
-//skriver ut alle reservasjonene
-void Rom::reservasjon(){
-	
-	//data om rommet, praktisk.
-	display();
-
-	//midlertidig reservasjons objekt
-	Reservasjon *temp;
-
-	//fjernet og legger til igjen reservasjonsobjektet for å
-	//få pekeren, deretter vises data.
-	for (int x = 1; x <= reservasjoner->no_of_elements(); x++){
-		temp = (Reservasjon*)reservasjoner->remove_no(x);
-		reservasjoner->add(temp);
-		temp->display();
-	}
-
-	//dersom det ikke finnes noen reservasjoner kommer en melding.
-	if (!reservasjoner->no_of_elements()){
-		cout << "\nIngen registrerte reservasjonere." << endl;
-	}
-
-}
 
 
 //returnerer listen i klassen.

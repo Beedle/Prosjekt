@@ -44,9 +44,11 @@ class Reservasjon: public Num_element{
 		void tofile(ofstream &fil);
 
 		//skriver ut data
-		void display();
+		void display(bool all);
 
 		//henter avreise og ankomst
 		int getAvreise();
 		int getAnkomst();
+		
+		bool compNavn(string txt);
 };

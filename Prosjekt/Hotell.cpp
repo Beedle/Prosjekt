@@ -305,10 +305,59 @@ void Hotell::displayrom(){
 
 			//dersom det er korrekt vises data.
 			if (temp->getid() == trash){
-				temp->display();
+				temp->display(true);
 			}
 		}
 	}
 
 	_getch();
+}
+
+
+
+void Hotell::avbestille(string txt){
+
+	Rom* tempRom;
+	List *tempList;
+	Reservasjon *tempRes;
+
+	//Alle romtypene
+	for(int x = 0; x < 3; x++){
+
+		//alle rommene
+		for (int y = 1; y <= rom[x]->no_of_elements(); y++){
+
+			//henter ut rom.
+			tempRom = (Rom*)rom[x]->remove_no(y);
+			rom[x]->add(tempRom);
+
+			//henter listen over reservasjoner.
+			tempList = (List*)tempRom->getlist();
+
+			//alle reservasjonene til ett rom.
+			for (int z = 1; z <= tempList->no_of_elements(); z ++){
+
+				//henter ut reservasjonen
+				tempRes = (Reservasjon*)tempList->remove_no(z);
+
+				//dersom det stemmer
+				if (!tempRes->compNavn(txt)){
+
+					//skriver ut reservasjonen og spør om den skal fjernes.
+					tempRom->display(false);
+					tempRes->display(false);
+					if(!confirm()){
+						tempList->add(tempRes);
+					}
+					//dersom det fjernes minker z, for å kompensere for
+					//fjernet reservasjon.
+					else (z--);
+				}
+				//dersom det ikke stemmer legges reservasjonen tilbake.
+				else {
+					tempList->add(tempRes);
+				}
+			}
+		}
+	}
 }

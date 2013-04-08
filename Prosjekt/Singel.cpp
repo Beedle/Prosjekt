@@ -27,5 +27,5 @@ void Singel::toFile(ofstream &file){
 void Singel::display(){
 	
 	//Samme som over, men vise data.
-	Rom::display();
+	Rom::display(false);
 }

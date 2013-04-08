@@ -35,6 +35,7 @@ class Hotell {
 		void tilfil();
 
 		void reserver();
+		void avbestille(string txt);
 
 		//viser på skjerm.
 		void display();

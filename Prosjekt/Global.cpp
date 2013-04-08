@@ -133,3 +133,20 @@ int getdate(string txt, int min){
 
 	return trash;
 }
+
+
+//Ja/Nei bare.
+bool confirm(){
+
+	char trash;
+	
+	cout << "Vil du fjerne? Y/N ";
+	do{
+		trash = toupper(_getch());
+	}while (trash != 'Y' && trash != 'N');
+
+	cout << trash;
+
+	if (trash == 'Y') return true;
+	else return false;
+}
