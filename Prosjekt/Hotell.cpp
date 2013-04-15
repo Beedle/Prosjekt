@@ -286,6 +286,42 @@ void Hotell::reserver(){
 }
 
 
+//skriver ut reservasjon(er) med gitt navn og dato.
+void Hotell::skrivReservasjon()
+{
+	//leser innskjekkerens navn.
+	string navn = les("Hva er innsjekkerens navn?");
+	int dato = timer.hent_dato();
+	Rom *temp;
+	bool funnetRom = false;
+
+	//går igjennom alle rom i hotellet.
+	for (int x = 0; x < 3; x++)
+	{
+		for (int y = 1; y <= rom[x]->no_of_elements(); y++)
+		{
+			//henter ut rommet
+			temp = (Rom*)rom[x]->remove_no(y);
+			rom[x]->add(temp);
+
+
+			//finner ut om det er reservert rom for dato i navn.
+			if (temp->finnReservasjon(navn, dato) && !funnetRom)
+			{
+				cout << temp->getid() << endl; //denne skal byttes ut med finere løsning.
+				funnetRom = true; //setter permanent merke på om rum er funnet.
+			}
+		}
+	}
+
+	if (!funnetRom)
+	{
+		cout << "Ingen reservasjon for dagens dato" << endl;
+	}
+}
+
+
+
 //skriver ut data om ett romnummer
 void Hotell::displayrom(){
 

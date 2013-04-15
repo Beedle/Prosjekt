@@ -30,6 +30,7 @@ int main(){
 				hotell->reserver();
 				break;
 
+<<<<<<< HEAD
 				//avbestiller reservajsoner, basert på navn
 			case 'A':
 				hotell->avbestille(les("\nI hvilke navn står reservasjonen: "));
@@ -37,6 +38,14 @@ int main(){
 
 
 			case 'I': break;
+=======
+			case 'A': break;
+			case 'I': 
+				hotell->skrivReservasjon();
+
+				break;
+
+>>>>>>> La til innsjekking
 			case 'U': break;
 			case 'R': break;
 

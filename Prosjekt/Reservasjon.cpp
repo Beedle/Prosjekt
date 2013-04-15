@@ -118,6 +118,11 @@ void Reservasjon::display(bool all){
 }
 
 
+//henter navn
+string Reservasjon::getNavn(){
+	return navn;
+}
+
 
 //henter avreise
 int Reservasjon::getAvreise(){

@@ -46,6 +46,9 @@ class Reservasjon: public Num_element{
 		//skriver ut data
 		void display(bool all);
 
+		//henter navn
+		string getNavn();
+
 		//henter avreise og ankomst
 		int getAvreise();
 		int getAnkomst();

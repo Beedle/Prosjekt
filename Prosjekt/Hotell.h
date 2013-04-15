@@ -37,6 +37,9 @@ class Hotell {
 		void reserver();
 		void avbestille(string txt);
 
+		//skriver ut reservasjon(er) med gitt navn og dato.
+		void skrivReservasjon();
+
 		//viser på skjerm.
 		void display();
 		void displaySuite();

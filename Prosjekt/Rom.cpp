@@ -36,9 +36,19 @@ void Rom::display(bool all){
 	if(!inklFrokost) cout << "ikke ";
 	cout << "inkludert" << endl;
 
+<<<<<<< HEAD
 	//dersom alle reservasjonene skulle være med.
 	if (all && reservasjoner->no_of_elements()){
 		Reservasjon *tempRes;
+=======
+
+	Reservasjon *temp;
+	for (int x = 1; x <= reservasjoner->no_of_elements(); x ++){
+		temp = (Reservasjon*)reservasjoner->remove_no(x);
+		reservasjoner->add(temp);
+		temp->display();
+	}
+>>>>>>> La til innsjekking
 
 		//går igjennom alle reservasjonene og skriver de ut
 		//inkluderer ikke regningene.
@@ -73,6 +83,30 @@ void Rom::toFile(ofstream &file){
 	//antallet senger og om frokost er inkludert.
 	file << antSenger << " " << inklFrokost;
 
+}
+
+bool Rom::finnReservasjon(string navn, int dato)
+{
+
+	//hjelpedata
+	Reservasjon *temp;
+	bool returnVal = false;
+
+	//kjør til du er i slutten av listen.
+	for (int x = 1; x <= reservasjoner->no_of_elements(); x++)
+	{
+		//fjerner og legger til igjen reservasjonsobjektet for å få pekeren
+		temp = (Reservasjon*)reservasjoner->remove_no(x);
+		reservasjoner->add(temp);
+
+		if (navn == temp->getNavn() && dato == temp->getAnkomst())
+		{
+			//hvis navn og dato passer, returner true.
+			returnVal = true;
+		}
+	}
+
+	return returnVal;
 }
 
 

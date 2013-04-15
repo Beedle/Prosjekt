@@ -25,8 +25,16 @@ class Rom: public Num_element {
 		//skriver til fil.
 		void toFile(ofstream &file);
 	
+<<<<<<< HEAD
 		//Viser data om rom
 		void display(bool all);
+=======
+		//Viser data
+		void display();
+
+		//leter etter reservasjon.
+		bool finnReservasjon(string navn, int dato);
+>>>>>>> La til innsjekking
 		
 		//skriver ut reservasjonene.
 		void reservasjon();

@@ -1,10 +1,29 @@
+<<<<<<< HEAD
 ﻿Build started 08.04.2013 15:19:54.
      1>Project "C:\Users\Spoki0\Documents\GitHub\Prosjekt\Prosjekt\Prosjekt.vcxproj" on node 2 (Build target(s)).
+=======
+﻿Build started 15.04.2013 02:07:04.
+     1>Project "C:\Users\SverreB\Documents\GitHub\Prosjekt\Prosjekt\Prosjekt.vcxproj" on node 2 (Build target(s)).
+>>>>>>> La til innsjekking
      1>ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc110.pdb" /Gd /TP /analyze- /errorReport:prompt Hotell.cpp
+         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc110.pdb" /Gd /TP /analyze- /errorReport:prompt Dobbel.cpp Global.cpp Hotell.cpp Main.cpp Pris.cpp Reg_Post.cpp Regning.cpp Reservasjon.cpp Rom.cpp Singel.cpp Suite.cpp
+         Rom.cpp
+         Generating Code...
+         Compiling...
+         Suite.cpp
+         Singel.cpp
+         Reservasjon.cpp
+     1>c:\users\sverreb\documents\github\prosjekt\prosjekt\reservasjon.cpp(25): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+         Regning.cpp
+         Reg_Post.cpp
+         Pris.cpp
+         Main.cpp
          Hotell.cpp
+         Global.cpp
+         Dobbel.cpp
+         Generating Code...
        Link:
-         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\Spoki0\Documents\GitHub\Prosjekt\Debug\Prosjekt.exe" /INCREMENTAL /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\Spoki0\Documents\GitHub\Prosjekt\Debug\Prosjekt.pdb" /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\Spoki0\Documents\GitHub\Prosjekt\Debug\Prosjekt.lib" /MACHINE:X86 Debug\Dobbel.obj
+         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\SverreB\Documents\GitHub\Prosjekt\Debug\Prosjekt.exe" /INCREMENTAL /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\SverreB\Documents\GitHub\Prosjekt\Debug\Prosjekt.pdb" /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\SverreB\Documents\GitHub\Prosjekt\Debug\Prosjekt.lib" /MACHINE:X86 Debug\Dobbel.obj
          Debug\Global.obj
          Debug\Hotell.obj
          Debug\Listtool.obj
@@ -17,9 +36,13 @@
          Debug\Singel.obj
          Debug\Suite.obj
          Debug\Timer.obj
-         Prosjekt.vcxproj -> C:\Users\Spoki0\Documents\GitHub\Prosjekt\Debug\Prosjekt.exe
-     1>Done Building Project "C:\Users\Spoki0\Documents\GitHub\Prosjekt\Prosjekt\Prosjekt.vcxproj" (Build target(s)).
+         Prosjekt.vcxproj -> C:\Users\SverreB\Documents\GitHub\Prosjekt\Debug\Prosjekt.exe
+     1>Done Building Project "C:\Users\SverreB\Documents\GitHub\Prosjekt\Prosjekt\Prosjekt.vcxproj" (Build target(s)).
 
 Build succeeded.
 
+<<<<<<< HEAD
 Time Elapsed 00:00:02.56
+=======
+Time Elapsed 00:00:05.68
+>>>>>>> La til innsjekking
