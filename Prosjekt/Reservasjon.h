@@ -11,6 +11,7 @@
 
 using namespace std;
 
+
 class Reservasjon: public Num_element{
 	private:
 		int avreise;
@@ -24,20 +25,20 @@ class Reservasjon: public Num_element{
 		int seng;
 
 		//liste over pris for antallet dager det overnattes
-		//20 er midlertidig max const
-		float pris[20];
+		//50 er midlertidig max const
+		float pris[50];
 
 		//navnet på alle beboerene.
 		//10 er midlertidig max
-		//string navn[10];
-		string navn;
+		string navn[10];
+		//string navn;
 
 		//liste med regninger.
 		List *regninger;
 
 	public:
 		//constructor
-		Reservasjon(int ID, int dpt, int gje);
+		Reservasjon(int ID, int dpt, int gje, string filnavn, int type);
 		Reservasjon(int ID, ifstream &fil);
 
 		//skriver til fil
@@ -54,4 +55,17 @@ class Reservasjon: public Num_element{
 		int getAnkomst();
 		
 		bool compNavn(string txt);
+
+		//endrer data
+		void setAnkomst(int ny);
+		void setAvreise(int ny);
+
+		//legger til regning
+		void addRegning();
+
+		//skriver ut ting til historiefil som regning.
+		void utskjekking(ofstream &fil);
+
+		//Spør om navnene på resten av okkupantene.
+		void innsjekk();
 };

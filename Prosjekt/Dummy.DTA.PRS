@@ -1,0 +1,19 @@
+ukedag
+enkel 100
+dobbel 200
+suite 500
+helg
+enkel 150
+dobbel 300
+suite 750
+antPerioder 2
+start 20130523
+slutt 20130528
+enkel 50
+dobbel 100
+suite 250
+start 20130812
+slutt 20130525
+enkel 200
+dobbel 400
+suite 1000

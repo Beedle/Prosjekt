@@ -10,6 +10,11 @@ Regning::Regning(int ID, ifstream &fil):Num_element(ID){
 	getline(fil, info);
 }
 
+Regning::Regning(int ID, string input):Num_element(ID)
+{
+	info = input;
+}
+
 //skriver til fil
 void Regning::tofile(ofstream &fil){
 

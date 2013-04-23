@@ -24,4 +24,4 @@ void fraFil(string file, Hotell *hotell);
 //henter respektiv fil.
 string getfil();
 
-bool confirm();
+bool confirm(const char txt[]);

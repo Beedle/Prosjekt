@@ -234,7 +234,7 @@ void Hotell::reserver(){
 
 					//dersom det er siste reservasjon, registreres ny
 					if(y == list->no_of_elements()){
-						res = new Reservasjon(fra, til, ant);
+						res = new Reservasjon(fra, til, ant, filnavn, temp);
 						list->add(res);
 
 						//for å bryte ut av for-løkkene
@@ -252,7 +252,7 @@ void Hotell::reserver(){
 						//det sjekker om denne ankommer før reservasjonen
 						//som skal registreres reiser, registreres ny.
 						if(tempRes2->getAnkomst() >= til){
-							res = new Reservasjon(fra, til, ant);
+							res = new Reservasjon(fra, til, ant, filnavn, temp);
 							list->add(res);
 
 							//for å bryte ut av for-løkkene
@@ -268,7 +268,7 @@ void Hotell::reserver(){
 
 			//dersom listen er tom for reservasjoner registreres ny
 			if (!list->no_of_elements()){
-				res = new Reservasjon(fra, til, ant);
+				res = new Reservasjon(fra, til, ant, filnavn, temp);
 				list->add(res);
 
 				//bryte ut av for-løkken
@@ -290,7 +290,7 @@ void Hotell::reserver(){
 void Hotell::skrivReservasjon()
 {
 	//leser innskjekkerens navn.
-	string navn = les("Hva er innsjekkerens navn?");
+	string navnet = les("\nHva er innsjekkerens navn?");
 	int dato = timer.hent_dato();
 	Rom *temp;
 	bool funnetRom = false;
@@ -302,15 +302,17 @@ void Hotell::skrivReservasjon()
 		{
 			//henter ut rommet
 			temp = (Rom*)rom[x]->remove_no(y);
-			rom[x]->add(temp);
 
 
 			//finner ut om det er reservert rom for dato i navn.
-			if (temp->finnReservasjon(navn, dato) && !funnetRom)
+			if (temp->finnReservasjon(navnet, dato) && !funnetRom)
 			{
 				cout << temp->getid() << endl; //denne skal byttes ut med finere løsning.
 				funnetRom = true; //setter permanent merke på om rum er funnet.
+
+				temp->innsjekk(navnet, timer.hent_dato());
 			}
+			rom[x]->add(temp);
 		}
 	}
 
@@ -382,7 +384,7 @@ void Hotell::avbestille(string txt){
 					//skriver ut reservasjonen og spør om den skal fjernes.
 					tempRom->display(false);
 					tempRes->display(false);
-					if(!confirm()){
+					if(!confirm("\nVil du fjerne?")){
 						tempList->add(tempRes);
 					}
 					//dersom det fjernes minker z, for å kompensere for
@@ -394,6 +396,478 @@ void Hotell::avbestille(string txt){
 					tempList->add(tempRes);
 				}
 			}
+		}
+	}
+}
+
+void Hotell::displayResEier()
+{
+	Rom* tempRom;
+	List* tempList;
+	Reservasjon* tempRes;
+
+	string navn = les("Eierens navn:");
+
+	//for alle typer rom
+	for (int i = 0; i < 3; i++)
+	{
+		//for alle rom
+		for (int j = 1; j <= rom[i]->no_of_elements(); j++)
+		{
+			
+			tempRom = (Rom*)rom[i]->remove_no(j);
+			rom[i]->add(tempRom);
+
+			//henter listen over reservasjoner.
+			tempList = (List*)tempRom->getlist();
+
+			//alle reservasjonene til ett rom.
+			for (int k = 1; k <= tempList->no_of_elements(); k++)
+			{
+				tempRes = (Reservasjon*)tempList->remove_no(k);
+				tempList->add(tempRes);
+
+				if (navn == tempRes->getNavn())
+				{
+					cout << tempRom->getid() << ' ';
+				}
+			}
+		}
+	}
+
+	cout << endl;
+}
+
+void Hotell::displayOkkupant()
+{
+	Rom* tempRom;
+	List* tempList;
+	Reservasjon* tempRes;
+	bool funnetNr = false;
+	bool funnetRes = false;
+
+	int romNr;
+	cout << "Ronmummer: ";
+	cin >> romNr;
+
+	//for alle typer rom
+	for (int i = 0; i < 3; i++)
+	{
+		//for alle rom
+		for (int j = 1; j <= rom[i]->no_of_elements(); j++)
+		{
+			
+			tempRom = (Rom*)rom[i]->remove_no(j);
+			rom[i]->add(tempRom);
+
+			if (tempRom->getid() == romNr)
+			{
+				funnetNr = true;
+
+				//henter listen over reservasjoner.
+				tempList = (List*)tempRom->getlist();
+				
+				//alle reservasjonene til ett rom.
+				for (int k = 1; k <= tempList->no_of_elements(); k++)
+				{
+					tempRes = (Reservasjon*)tempList->remove_no(k);
+					tempList->add(tempRes);
+					
+					//hvis det er en reservasjon for dagens dato.
+					if (timer.hent_dato() <= tempRes->getAvreise() && timer.hent_dato() >= tempRes->getAnkomst())
+					{
+						funnetRes = true;
+						tempRes->display(true);
+					}
+				}
+			}
+		}
+	}
+
+	//hvis rommet eller reservasjonen ikke er funnet
+	if (!funnetNr)
+	{
+		cout << "Romnummer ikke funnet" << endl;
+	}
+	else if (!funnetRes)
+	{
+		cout << "Ingen reservasjon i dag" << endl;
+	}
+}
+
+void Hotell::ledigeRom(int nr)
+{
+	//midlertidlige variabler
+	Rom* tempRom;
+	List* tempResList;
+	Reservasjon* tempRes;
+	bool opptatt = false;
+
+	//hvilket tidsrom vil du finne?
+	int minDate = getdate("\nFra dato: ", timer.hent_dato());
+	int maxDate = getdate("\nTil dato: ", minDate);
+
+	//for alle rom av typen 'nr'
+	for (int i = 1; i <= rom[nr]->no_of_elements(); i++)
+	{
+		tempRom = (Rom*)rom[nr]->remove_no(i);
+		rom[nr]->add(tempRom);
+
+		tempResList = (List*)tempRom->getlist();
+
+		//for alle reservasjoner
+		for (int j = 1; j <= tempResList->no_of_elements(); j++)
+		{
+			tempRes = (Reservasjon*)tempResList->remove_no(j);
+			tempResList->add(tempRes);
+
+			//hvis reservasjonen gjelder for 
+			if (!(maxDate < tempRes->getAnkomst() || minDate > tempRes->getAvreise()))
+			{
+				opptatt = true;
+			}
+		}
+		//hvis dette rommet ikke er opptatt
+		if (!opptatt)
+		{
+			//skriv ut romnr
+			cout << tempRom->getid() << ' ';
+		}
+	}
+}
+
+string Hotell::getNavn()
+{
+	return navn;
+}
+
+void Hotell::ledigTidRom()
+{
+	int romNr;				//rommet du vil ha
+	bool funnet = false;	//er rommet funnet
+	Rom* tempRom;
+	List* tempList;
+	Reservasjon* tempRes;
+
+	cout << "Hvilket romnummer?" << endl;
+	cin >> romNr;
+
+	//Alle romtypene
+	for(int i = 0; i < 3; i++)
+	{
+		//Alle rommene
+		for (int j = 1; j <= rom[i]->no_of_elements(); j++)
+		{
+			tempRom = (Rom*)rom[i]->remove_no(j);
+			rom[i]->add(tempRom);
+
+			//hvis rommet er riktig
+			if (romNr == tempRom->getid())
+			{
+				tempList = tempRom->getlist();
+				funnet = true;
+				cout << "\nRommet er opptatt i perioden(e):\n";
+
+				//hvis det ikke er noen reservasjoner
+				if (tempList->no_of_elements() == 0)
+				{
+					cout << "Ingen reservasjoner" << endl;
+				}
+				else
+				{
+					//For alle reservasjonene
+					for (int k = 1; k <= tempList->no_of_elements(); k++)
+					{
+						tempRes = (Reservasjon*)tempList->remove_no(k);
+						tempList->add(tempRes);
+						
+						cout << '\t' << tempRes->getAnkomst() << "\t-\t" << tempRes->getAvreise() << endl;
+					}
+				}
+			}
+		}
+	}
+
+	//hvis rommet er funnet
+	if (!funnet)
+	{
+		cout << "Romnummer ikke funnet." << endl;
+	}
+}
+
+//endrer info etter type (1=annkomst, 2=avreise, 3 = begge)
+void Hotell::endre(int type)
+{
+	bool funnet = false;	//er rommet funnet
+	Rom* tempRom;
+	List* tempList;
+	Reservasjon* tempRes;
+
+	string eier = les("Romeier:");
+	int origAnkomst = getdate("\nOriginal ankomst", timer.hent_dato());
+
+	for (int i = 0; i < 3; i++)
+	{
+		//for alle rom
+		for (int j = 1; j <= rom[i]->no_of_elements(); j++)
+		{
+			
+			tempRom = (Rom*)rom[i]->remove_no(j);
+
+			//henter listen over reservasjoner.
+			tempList = (List*)tempRom->getlist();
+			
+			//alle reservasjonene til ett rom.
+			for (int k = 1; k <= tempList->no_of_elements(); k++)
+			{
+				tempRes = (Reservasjon*)tempList->remove_no(k);
+				
+				//hvis det er en reservasjon for dagens dato.
+				if (origAnkomst == tempRes->getAnkomst())
+				{
+					funnet = true;
+					cout << "\nRomnummer: " << tempRom->getid() << endl;
+					tempRes->display(false);
+
+					if (confirm("\nVil du endre denne reservasjonen?"))
+					{
+						if (type == 1 || type == 3)
+						{
+							//endrer avreisen
+							tempRes->setAnkomst(getdate("\nNy ankomst", timer.hent_dato()));
+						}
+						if (type == 2 || type == 3)
+						{
+							//endrer avreisen
+							tempRes->setAvreise(getdate("\nNy avreise", timer.hent_dato()));
+						}
+						
+					}
+				}
+				//setter tilbake
+				tempList->add(tempRes);
+				tempRom->replaceList(tempList);
+			}
+			rom[i]->add(tempRom);
+		}
+	}
+	if (!funnet)
+	{
+		cout << "\nReservasjon ikke funnet" << endl;
+	}
+}
+
+//bytter rom
+void Hotell::byttRom()
+{
+	bool funnet = false;	//er rommet funnet
+	bool brukt = false;
+	Rom* tempRom1;
+	List* tempList1;
+	Reservasjon* tempRes1;
+	Rom* tempRom2;
+	List* tempList2;
+	Reservasjon* tempRes2;
+	int romNr1;
+	int romNr2;
+	int x;
+	int y;
+	int z;
+
+	cout << "\nHvilket romnummer vil du flytte fra? ";
+	cin >> romNr1;
+
+	int ankomst = getdate("\nAnkomst", timer.hent_dato());
+
+	
+	for (int i = 0; i < 3; i++)
+	{
+		//for alle rom
+		for (int j = 1; j <= rom[i]->no_of_elements(); j++)
+		{
+			tempRom1 = (Rom*)rom[i]->remove_no(j);
+			rom[i]->add(tempRom1);
+
+			if (tempRom1->getid() == romNr1)
+			{
+				//henter listen over reservasjoner.
+				tempList1 = (List*)tempRom1->getlist();
+				
+				//alle reservasjonene til ett rom.
+				for (int k = 1; k <= tempList1->no_of_elements(); k++)
+				{
+					tempRes1 = (Reservasjon*)tempList1->remove_no(k);
+					tempList1->add(tempRes1);
+
+					if (tempRes1->getAnkomst() == ankomst)
+					{
+						funnet = true;
+						x = i;
+						y = j;
+						z = k;
+					}
+				}
+			}
+		}
+	}
+
+	if (!funnet)
+	{
+		cout << "\nReservasjon ikke funnet." << endl;
+	}
+	else
+	{//sett inn i nytt rom
+		
+		cout << "\nHvilket romnummer vil du flytte til? ";
+		cin >> romNr2;
+
+		for (int i = 0; i < 3; i++)
+		{
+			//for alle rom
+			for (int j = 1; j <= rom[i]->no_of_elements(); j++)
+			{
+				tempRom2 = (Rom*)rom[i]->remove_no(j);
+				rom[i]->add(tempRom2);
+
+				tempList2 = (List*)tempRom2->getlist();
+
+				if (tempRom2->getid() == romNr2)
+				{
+
+					//alle reservasjonene til ett rom.
+					for (int k = 1; k <= tempList1->no_of_elements(); k++)
+					{
+						tempRes2 = (Reservasjon*)tempList2->remove_no(k);
+						tempList2->add(tempRes2);
+	
+						if (!(tempRes1->getAvreise() < tempRes2->getAnkomst() || tempRes1->getAnkomst() > tempRes2->getAvreise()))
+						{
+							brukt = true;
+						}
+					}
+				}
+			}
+			if (!brukt)
+			{
+				//for alle rom
+				for (int j = 1; j <= rom[i]->no_of_elements(); j++)
+				{
+					tempRom2 = (Rom*)rom[i]->remove_no(j);
+		
+					if (tempRom2->getid() == romNr2)
+					{
+						//henter listen over reservasjoner.
+						
+						//legger til reservasjonen.
+						tempList2->add(tempRes1);
+						tempRom2->replaceList(tempList2);
+	
+						//fjerner reservasjonen fra det gamle rommet.
+						tempList1->destroy(z);
+						tempRom1->replaceList(tempList1);
+						rom[x]->destroy(y);
+						rom[x]->add(tempRom1);
+					}
+					rom[i]->add(tempRom2);
+				}
+			}
+		}
+	}
+
+	if (brukt)
+	{
+		cout << "\nDet rommet er opptatt." << endl;
+	}
+}
+
+
+void Hotell::utskjekking()
+{
+	//filnavnet er egen variabel.
+	ofstream fil;
+	fil.open(filnavn+".HST");
+	string navn;
+
+	Rom* tempRom;
+	List* tempList;
+	Reservasjon* tempRes;
+
+	bool funnet = false;
+
+
+	navn = les("\nUtskjekkers navn:");
+
+	//for alle rom
+	for (int x = 0; x < 3; x++)
+	{
+		for (int y = 1; y <= rom[x]->no_of_elements(); y++)
+		{
+			//henter ut rommet
+			tempRom = (Rom*)rom[x]->remove_no(y);
+			rom[x]->add(tempRom);
+
+			tempList = tempRom->getlist();
+
+			for (int z = 1; z <= tempList->no_of_elements(); z++)
+			{
+				tempRes = (Reservasjon*)tempList->remove_no(z);
+
+				//hvis den er riktig
+				if (navn == tempRes->getNavn() && timer.hent_dato() == tempRes->getAvreise())
+				{
+					funnet = true;
+
+					tempRes->utskjekking(fil);
+				}
+				else
+				{ //hvis det ikke er riktig reservasjon, sett den tilbake.
+					tempList->add(tempRes);
+				}
+			}
+		}
+	}
+
+	fil.close();
+}
+
+void Hotell::addRegning()
+{
+	int romNr;				//rommet du vil ha
+	bool funnet = false;	//er rommet funnet
+	Rom* tempRom;
+	List* tempList;
+	Reservasjon* tempRes;
+
+	cout << "Hvilket romnummer?" << endl;
+	cin >> romNr;
+
+	//Alle romtypene
+	for(int i = 0; i < 3; i++)
+	{
+		//Alle rommene
+		for (int j = 1; j <= rom[i]->no_of_elements(); j++)
+		{
+			tempRom = (Rom*)rom[i]->remove_no(j);
+
+			//hvis rommet er riktig
+			if (romNr == tempRom->getid())
+			{
+				tempList = tempRom->getlist();
+				//for alle reservasjoner
+				for (int j = 0; j < tempList->no_of_elements(); j++)
+				{
+					tempRes = (Reservasjon*)tempList->remove_no(j);
+					if (tempRes->getAnkomst() <= timer.hent_dato() && tempRes->getAvreise() >= timer.hent_dato())
+					{
+						funnet = true;
+						//legg inn ting.
+						tempRes->addRegning();
+						tempList->add(tempRes);
+						tempRom->replaceList(tempList);
+					}
+				}
+			}
+			rom[i]->add(tempRom);
 		}
 	}
 }

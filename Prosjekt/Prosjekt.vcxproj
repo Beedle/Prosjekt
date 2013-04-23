@@ -96,6 +96,7 @@
   <ItemGroup>
     <None Include="Bordell.DTA" />
     <None Include="Dummy.DTA" />
+    <None Include="Dummy.DTA.PRS" />
     <None Include="Hoteller.DTA" />
     <None Include="Reg_Post.DTA" />
   </ItemGroup>

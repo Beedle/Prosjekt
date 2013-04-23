@@ -2,7 +2,6 @@
 
 using namespace std;
 
-
 //constructor, sender ID videre
 Rom::Rom(int ID, ifstream &file):Num_element(ID){
 
@@ -36,28 +35,15 @@ void Rom::display(bool all){
 	if(!inklFrokost) cout << "ikke ";
 	cout << "inkludert" << endl;
 
-<<<<<<< HEAD
 	//dersom alle reservasjonene skulle være med.
-	if (all && reservasjoner->no_of_elements()){
-		Reservasjon *tempRes;
-=======
-
+	
 	Reservasjon *temp;
-	for (int x = 1; x <= reservasjoner->no_of_elements(); x ++){
-		temp = (Reservasjon*)reservasjoner->remove_no(x);
-		reservasjoner->add(temp);
-		temp->display();
-	}
->>>>>>> La til innsjekking
-
-		//går igjennom alle reservasjonene og skriver de ut
-		//inkluderer ikke regningene.
-		cout << "\nFølgende reservasjoner:" << endl;
-		for (int x = 1; x <= reservasjoner->no_of_elements(); x++){
-
-			tempRes = (Reservasjon*)reservasjoner->remove_no(x);
-			reservasjoner->add(tempRes);
-			tempRes->display(false);
+	if (all)
+	{
+		for (int x = 1; x <= reservasjoner->no_of_elements(); x ++){
+			temp = (Reservasjon*)reservasjoner->remove_no(x);
+			reservasjoner->add(temp);
+			temp->display(all);
 		}
 	}
 }
@@ -124,4 +110,30 @@ int Rom::getid(){
 //returnerer antallet senger
 int Rom::getsenger(){
 	return antSenger;
+}
+
+void Rom::replaceList(List* liste)
+{
+	reservasjoner = liste;
+}
+
+void Rom::innsjekk(string navn, int dato)
+{
+	//hjelpedata
+	Reservasjon *temp;
+
+	//kjør til du er i slutten av listen.
+	for (int x = 1; x <= reservasjoner->no_of_elements(); x++)
+	{
+		//fjerner reservasjonsobjektet
+		temp = (Reservasjon*)reservasjoner->remove_no(x);
+
+		if (navn == temp->getNavn() && dato == temp->getAnkomst())
+		{
+			//hvis navn og dato passer, kjør innskjekk på reservasjonen.
+			temp->innsjekk();
+		}
+		reservasjoner->add(temp);
+	}
+
 }

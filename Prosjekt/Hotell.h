@@ -7,6 +7,7 @@
 
 using namespace std;
 
+
 class Hotell {
 	private:
 		string navn;
@@ -37,6 +38,9 @@ class Hotell {
 		void reserver();
 		void avbestille(string txt);
 
+		//endrer info etter type (1=annkomst, 2=avreise, 3 = begge)
+		void endre(int type);
+
 		//skriver ut reservasjon(er) med gitt navn og dato.
 		void skrivReservasjon();
 
@@ -45,4 +49,19 @@ class Hotell {
 		void displaySuite();
 		void displayrom();
 
+		string getNavn();
+
+		void displayResEier();
+
+		void displayOkkupant();
+
+		void ledigeRom(int nr);
+
+		void ledigTidRom();
+
+		void byttRom();
+
+		void utskjekking();
+
+		void addRegning();
 };

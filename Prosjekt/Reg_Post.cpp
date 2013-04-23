@@ -30,3 +30,21 @@ void Reg_Post::display(){
 		cout << x << " - " << poster[x] << endl;
 	}
 }
+
+int Reg_Post::getAntall()
+{
+	return antall;
+}
+
+//sender tilbake beskrivelden, eller "" hvis no ikke finnes.
+string Reg_Post::beskrivelse(int no)
+{
+	if (no <= antall && no >= 0)
+	{
+		return poster[no];
+	}
+	else
+	{
+		return "";
+	}
+}

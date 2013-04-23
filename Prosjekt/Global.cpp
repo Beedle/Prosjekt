@@ -20,6 +20,9 @@ void menu(){
 
 	cout << "\tE - Endre" << endl;
 	cout << "\t\t1 - Ankomst og/eller Avreise før insjekking" << endl;
+	cout << "\t\t\t1 - Ankomst" << endl;
+	cout << "\t\t\t2 - Avreise" << endl;
+	cout << "\t\t\t3 - Ankomst og avreise" << endl;
 	cout << "\t\t2 - Avreise etter innsjekking." << endl;
 	cout << "\t\t3 - Rom" << endl;
 
@@ -31,6 +34,9 @@ void menu(){
 	cout << "\t\t5 - Alle reservasjoner for ett rom." << endl;
 	cout << "\t\t6 - Alle data om rommets nåværende beboer" << endl;
 	cout << "\t\t7 - Alle ledige rom av en gitt type i en gitt tidsperiode" << endl;
+	cout << "\t\t\t1 - Enkelt" << endl;
+	cout << "\t\t\t2 - Dobbeltelt" << endl;
+	cout << "\t\t\t3 - Suite" << endl;
 
 	cout << "\tT - Skrive data til fil" << endl;
 	cout << "\tH - Bytte hotell" << endl;
@@ -73,10 +79,12 @@ string les(const char txt[]){
 
 	//skriver ut ledeteksten og leser strengen
 	//helt til strengen er lengre enn 1.
-	do{
-		cout << txt << " ";
+
+	while (temp.length() < 1)
+	{
+		cout << txt << '\n';
 		getline(cin, temp);
-	} while (temp.length() < 1);
+	}
 
 	return temp;
 }
@@ -136,11 +144,11 @@ int getdate(string txt, int min){
 
 
 //Ja/Nei bare.
-bool confirm(){
+bool confirm(const char txt[]){
 
 	char trash;
 	
-	cout << "Vil du fjerne? Y/N ";
+	cout << txt << " (Y/N) ";
 	do{
 		trash = toupper(_getch());
 	}while (trash != 'Y' && trash != 'N');

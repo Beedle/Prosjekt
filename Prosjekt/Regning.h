@@ -17,6 +17,7 @@ class Regning : public Num_element{
 	public:
 		//constructor
 		Regning(int ID, ifstream &fil);
+		Regning(int ID, string input);
 
 		//skriver til fil
 		void tofile(ofstream &fil);

@@ -15,6 +15,8 @@ class Reg_Post{
 		Reg_Post();
 
 		void display();
-
+		int getAntall();
+		//sender tilbake beskrivelden, eller NULL hvis no ikke finnes.
+		string beskrivelse(int no);
 };
 

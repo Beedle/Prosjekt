@@ -25,22 +25,22 @@ class Rom: public Num_element {
 		//skriver til fil.
 		void toFile(ofstream &file);
 	
-<<<<<<< HEAD
 		//Viser data om rom
 		void display(bool all);
-=======
-		//Viser data
-		void display();
 
 		//leter etter reservasjon.
 		bool finnReservasjon(string navn, int dato);
->>>>>>> La til innsjekking
 		
 		//skriver ut reservasjonene.
 		void reservasjon();
+
+		//bytter ut listen
+		void replaceList(List* liste);
 
 		//returnerer en av de private variablene
 		List *getlist();
 		int getid();
 		int getsenger();
+
+		void innsjekk(string navn, int dato);
 };

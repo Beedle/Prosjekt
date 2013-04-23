@@ -1,0 +1,2345 @@
+//Gruppe 9
+//Gruppe 9
+//Gruppe 9
+
+//Dobbel.h
+//
+//
+//Dobbeltrom, underklasse av rom
+
+#pragma once
+
+#include "Rom.h"
+
+#include <fstream>
+
+using namespace std;
+
+
+class Dobbel: public Rom {
+	protected:
+		bool ekstraSeng;
+		
+	public:
+		//constructor med ID og fil
+		Dobbel(int ID, ifstream &file);
+
+		//Skriver data til fil
+		void toFile(ofstream &file);
+
+		//skriver data om filen
+		void display();
+
+};
+
+//Global.h
+//
+//
+//Globale funksjoner
+
+
+#pragma once
+
+#include "Hotell.h"
+
+#include <string>
+
+
+using namespace std;
+
+
+string les(const char txt[]);
+char les(bool type);
+
+//leser dato, med minimum
+int getdate(string txt, int min);
+
+void menu();
+
+void fraFil(string file, Hotell *hotell);
+
+//henter respektiv fil.
+string getfil();
+
+bool confirm(const char txt[]);
+
+//Header.h
+//
+//
+//alle header filene.
+
+//Frode sine filer.
+#include "Listtool.h"
+#include "Timer.h"
+
+//lokale filer
+#include "Const.h"
+#include "Global.h"
+#include "Pris.h"
+#include "Reg_Post.h"
+
+//lokale filer under hotell
+#include "Hotell.h"
+#include "Rom.h"
+#include "Dobbel.h"
+#include "Singel.h"
+#include "Suite.h"
+#include "Reservasjon.h"
+#include "Regning.h"
+
+//standard biblioteker.
+#include <iostream>
+#include <fstream>
+#include <string>
+#include <conio.h>
+#include <Windows.h>
+
+//Hotell.h
+//
+//
+//Hotell
+
+#pragma once
+
+#include <string>
+#include <fstream>
+
+using namespace std;
+
+
+class Hotell {
+	private:
+		string navn;
+		string addresse;
+		string mail;
+		string filnavn;
+
+		int postnummer;
+		int telefon;
+		int fax;
+		int frokost;
+		int seng;
+		int antFascilliteter;
+
+		//10, bare for en midlertidig max.
+		string fascilliteter[10];
+
+		//rom[0] for vanlig, [1] for dobbeltrom og [2] for sutie.
+		List *rom[3];
+
+	public:
+		//constructor som tar filnavn som parameter.
+		Hotell(string file);
+		~Hotell();
+
+		void tilfil();
+
+		void reserver();
+		void avbestille(string txt);
+
+		//endrer info etter type (1=annkomst, 2=avreise, 3 = begge)
+		void endre(int type);
+
+		//skriver ut reservasjon(er) med gitt navn og dato.
+		void skrivReservasjon();
+
+		//viser på skjerm.
+		void display();
+		void displaySuite();
+		void displayrom();
+
+		string getNavn();
+
+		void displayResEier();
+
+		void displayOkkupant();
+
+		void ledigeRom(int nr);
+
+		void ledigTidRom();
+
+		void byttRom();
+
+		void utskjekking();
+
+		void addRegning();
+};
+
+//Pris.h
+//
+//
+//pris
+
+#pragma once
+
+class Pris{
+	private:
+		//rom[0] for vanlig, [1] for dobbeltrom og [2] for sutie.
+		float ukedag[3];
+		float helg[3];
+
+		int antPerioder;
+
+		//spesielle priser
+		float tilbudspris[365][3];
+		int startdato[365];
+		int sluttdato[365];
+	public:
+		Pris(string file);
+
+		float getPris(int dato, int romtype);
+};
+
+//Reg_post.h
+//
+//
+//
+
+#pragma once
+
+#include <string>
+
+using namespace std;
+
+class Reg_Post{
+	private:
+		string poster[10];
+		int antall;
+
+	public:
+		Reg_Post();
+
+		void display();
+		int getAntall();
+		//sender tilbake beskrivelden, eller NULL hvis no ikke finnes.
+		string beskrivelse(int no);
+};
+
+//Regning.h
+//
+//
+//Regning underklasse av num element
+
+#pragma once
+
+#include "Listtool.h"
+
+#include <fstream>
+#include <string>
+
+using namespace std;
+
+
+class Regning : public Num_element{
+	private:
+		string info;
+
+	public:
+		//constructor
+		Regning(int ID, ifstream &fil);
+		Regning(int ID, string input);
+
+		//skriver til fil
+		void tofile(ofstream &fil);
+
+		//skriver ut data
+		void display();
+};
+
+//Reservasjon.h
+//
+//
+//Reservasjon, underklasse av num element for sortering på dato
+
+#pragma once
+
+#include "Listtool.h"
+#include "Regning.h"
+#include "Timer.h"
+
+#include <fstream>
+#include <string>
+
+using namespace std;
+
+
+class Reservasjon: public Num_element{
+	private:
+		int avreise;
+		int overnattinger;
+		int beboere;
+
+		//bør endres til enum
+		//1 - utilgjengelig
+		//2 - tilgjengelig
+		//3 - i bruk
+		int seng;
+
+		//liste over pris for antallet dager det overnattes
+		//50 er midlertidig max const
+		float pris[50];
+
+		//navnet på alle beboerene.
+		//10 er midlertidig max
+		string navn[10];
+		//string navn;
+
+		//liste med regninger.
+		List *regninger;
+
+	public:
+		//constructor
+		Reservasjon(int ID, int dpt, int gje, string filnavn, int type);
+		Reservasjon(int ID, ifstream &fil);
+
+		//skriver til fil
+		void tofile(ofstream &fil);
+
+		//skriver ut data
+		void display(bool all);
+
+		//henter navn
+		string getNavn();
+
+		//henter avreise og ankomst
+		int getAvreise();
+		int getAnkomst();
+		
+		bool compNavn(string txt);
+
+		//endrer data
+		void setAnkomst(int ny);
+		void setAvreise(int ny);
+
+		//legger til regning
+		void addRegning();
+
+		//skriver ut ting til historiefil som regning.
+		void utskjekking(ofstream &fil);
+
+		//Spør om navnene på resten av okkupantene.
+		void innsjekk();
+};
+
+//Singel.h
+//
+//
+//Singelrom, underklasse av rom
+
+
+
+
+#pragma once
+
+#include "Rom.h"
+
+#include <fstream>
+
+
+using namespace std;
+
+
+class Singel: public Rom {
+	protected:
+
+	public:
+		//constructor med ID og fil
+		Singel(int ID, ifstream &file);
+
+		//Skriver data til fil
+		void toFile(ofstream &file);
+
+		//skriver data om filen
+		void display();
+};
+
+//Rom.h
+//
+//
+//Superklassen til alle rommene.
+
+#pragma once
+
+
+#include "Listtool.h"
+
+#include <string>
+#include <fstream>
+
+
+
+using namespace std;
+
+class Rom: public Num_element {
+	protected:
+		int antSenger;
+		bool inklFrokost;
+		List *reservasjoner;
+
+	public:
+		//constructor med ID of fil.
+		Rom(int ID, ifstream &file);
+
+		//skriver til fil.
+		void toFile(ofstream &file);
+	
+		//Viser data om rom
+		void display(bool all);
+
+		//leter etter reservasjon.
+		bool finnReservasjon(string navn, int dato);
+		
+		//skriver ut reservasjonene.
+		void reservasjon();
+
+		//bytter ut listen
+		void replaceList(List* liste);
+
+		//returnerer en av de private variablene
+		List *getlist();
+		int getid();
+		int getsenger();
+
+		void innsjekk(string navn, int dato);
+};
+
+
+//Suite.h
+//
+//
+//Suite, underklasse av rom
+
+#pragma once
+
+#include "Rom.h"
+#include <string>
+#include <fstream>
+
+using namespace std;
+
+
+class Suite: public Rom {
+	private:
+		int kvm;
+		string beskrivelse;
+
+	public:
+		//constructor med ID og fil
+		Suite(int ID, ifstream &file);
+
+		//Skriver data til fil
+		void toFile(ofstream &file);
+
+		//skriver data om filen
+		void display();
+
+};
+
+
+//Suite.cpp
+//
+//
+//
+#include "Header.h"
+
+
+
+using namespace std;
+
+
+
+//leser data fra fil.
+Suite::Suite(int ID, ifstream &file):Rom(ID, file){
+	
+	file >> kvm; file.ignore();
+	getline(file, beskrivelse);
+	antSenger += 4;
+}
+
+
+//skriver til fil;
+void Suite::toFile(ofstream &file){
+
+	//tar - og + 4, sånn at det som blir skrevet til fil
+	//er antallet senger i forhold til 4, som alle suitene har.
+	antSenger -= 4;
+	Rom::toFile(file);
+	antSenger += 4;
+
+	file << " " << kvm << " " << beskrivelse;
+}
+
+
+//skriver data
+void Suite::display(){
+	
+	Rom::display(false);
+
+	cout << "\tSuiten er " << kvm << " kvadratmeter" << endl;
+	cout << "\t" << beskrivelse << "\n\n";
+}
+
+//Singel.cpp
+//
+//
+//
+
+
+
+#include "Header.h"
+
+
+using namespace std;
+
+
+
+Singel::Singel(int ID, ifstream &file):Rom(ID, file){
+	//singel har ingen ekstra data i forhold til rom
+	//derfor er den tom.
+
+}
+
+
+
+void Singel::toFile(ofstream &file){
+
+	//samme som over, men med skriving til fil.
+	Rom::toFile(file);
+}
+
+
+
+void Singel::display(){
+	
+	//Samme som over, men vise data.
+	Rom::display(false);
+}
+
+//Rom.cpp
+//
+//
+//
+#include "Header.h"
+
+using namespace std;
+
+//constructor, sender ID videre
+Rom::Rom(int ID, ifstream &file):Num_element(ID){
+
+	
+	//lager en ny liste med reservasjoner
+	reservasjoner = new List(Sorted);
+
+	//leser inn antallet reservasjoner og reservasjonene
+	int trash;
+	int resID;
+	Reservasjon *res;
+	file >> trash; file.ignore();
+	for(int x = 1; x <= trash; x++){
+		file >> resID;
+		res = new Reservasjon(resID, file);
+		reservasjoner->add(res);
+	}
+
+
+	//leser inn antall senger for rommet og om frokost er inkludert
+	file >> antSenger >> inklFrokost;
+
+}
+
+//viser data
+void Rom::display(bool all){
+	cout << "\n\nRomnummer: " << number << endl;
+	cout << "\tAntall senger: " << antSenger << endl;
+	
+	cout << "\tFrokost er ";
+	if(!inklFrokost) cout << "ikke ";
+	cout << "inkludert" << endl;
+
+	//dersom alle reservasjonene skulle være med.
+	
+	Reservasjon *temp;
+	if (all)
+	{
+		for (int x = 1; x <= reservasjoner->no_of_elements(); x ++){
+			temp = (Reservasjon*)reservasjoner->remove_no(x);
+			reservasjoner->add(temp);
+			temp->display(all);
+		}
+	}
+}
+
+
+
+//skriver til fil.
+void Rom::toFile(ofstream &file){
+
+	//romnummer og antallet reservasjoner.
+	file << number << " " << reservasjoner->no_of_elements() << endl;
+
+	//skriver reservasjoner til fil.
+	Reservasjon *temp;
+	for(int x = 1; x <= reservasjoner->no_of_elements(); x++){
+			
+		//fjerner og legger til reservasjonen, og skriver så til fil.
+		temp = (Reservasjon*)reservasjoner->remove_no(x);
+		reservasjoner->add(temp);
+		temp->tofile(file);
+	}
+
+	//antallet senger og om frokost er inkludert.
+	file << antSenger << " " << inklFrokost;
+
+}
+
+bool Rom::finnReservasjon(string navn, int dato)
+{
+
+	//hjelpedata
+	Reservasjon *temp;
+	bool returnVal = false;
+
+	//kjør til du er i slutten av listen.
+	for (int x = 1; x <= reservasjoner->no_of_elements(); x++)
+	{
+		//fjerner og legger til igjen reservasjonsobjektet for å få pekeren
+		temp = (Reservasjon*)reservasjoner->remove_no(x);
+		reservasjoner->add(temp);
+
+		if (navn == temp->getNavn() && dato == temp->getAnkomst())
+		{
+			//hvis navn og dato passer, returner true.
+			returnVal = true;
+		}
+	}
+
+	return returnVal;
+}
+
+
+
+//returnerer listen i klassen.
+List* Rom::getlist(){
+	return reservasjoner;
+}
+
+//returnerer romnummer
+int Rom::getid(){
+	return number;
+}
+
+//returnerer antallet senger
+int Rom::getsenger(){
+	return antSenger;
+}
+
+void Rom::replaceList(List* liste)
+{
+	reservasjoner = liste;
+}
+
+void Rom::innsjekk(string navn, int dato)
+{
+	//hjelpedata
+	Reservasjon *temp;
+
+	//kjør til du er i slutten av listen.
+	for (int x = 1; x <= reservasjoner->no_of_elements(); x++)
+	{
+		//fjerner reservasjonsobjektet
+		temp = (Reservasjon*)reservasjoner->remove_no(x);
+
+		if (navn == temp->getNavn() && dato == temp->getAnkomst())
+		{
+			//hvis navn og dato passer, kjør innskjekk på reservasjonen.
+			temp->innsjekk();
+		}
+		reservasjoner->add(temp);
+	}
+
+}
+
+//Reservasjon.cpp
+//
+//
+//
+
+
+#include "Header.h"
+
+using namespace std;
+
+extern Timer timer;
+
+
+//oppretter ny reservasjon. Ankomst, avreise og antallet gjester som parameter
+Reservasjon::Reservasjon(int ID, int dpt, int gje, string filnavn, int type):Num_element(ID){
+
+	Pris* prisen= new Pris(filnavn+".DTA");
+	//variabler settes lik parametre.
+	beboere = gje;
+	avreise = dpt;
+	
+	//leser inn navn
+	navn[0] = les("Navn det skal reserveres i");
+
+	//antallet overnattinger, og leser pris for hver dag.
+	overnattinger = timer.forskjell_datoer(ID, dpt);
+	for (int x = 0; x <= overnattinger; x++){
+
+		pris[x] = prisen->getPris(ID+x, type);
+	}
+
+	//oppretter liste
+	regninger = new List(FIFO);
+}
+
+
+
+Reservasjon::Reservasjon(int ID, ifstream &fil):Num_element(ID){
+
+	//avreise dato
+	fil >> avreise;
+
+	//antallet dager det skal overnattes, og pris for alle dagene
+	overnattinger = timer.forskjell_datoer(ID, avreise);
+	for (int x = 1; x <= overnattinger; x++){
+		fil >> pris[x];
+	}
+
+	//status på seng, antallet beboere.
+	//og navn på alle beboerene.
+	fil >> seng >> beboere; fil.ignore();
+	for(int x = 0; x < beboere; x++){
+		getline(fil, navn[x]);
+	}
+
+
+	int trash;
+	int sum;
+	regninger = new List(Sorted);
+	Regning *regning;
+
+	//antallet regninger og regningene.
+	fil >> trash;
+	for(int x = 1; x <= trash; x++){
+
+		fil >> sum;
+		regning = new Regning(sum, fil);
+		regninger->add(regning);
+	}
+
+
+}
+
+
+//skriver til fil.
+void Reservasjon::tofile(ofstream &fil){
+
+	//ankomst og avreise, samt pris for antallet dager
+	fil << number << " " << avreise;
+	for(int x = 1; x <= timer.forskjell_datoer(number, avreise); x++){
+		fil << " " << pris[x];
+	}
+	
+	//status på ekstra seng
+	fil << " " << seng << endl;
+	
+	//antallet beboere og navn på de
+	fil << beboere << endl;
+	for (int x = 0; x < beboere; x++){
+		fil << navn[x] << endl;
+	}
+
+
+	//antallet regninger og regningene.
+	Regning *temp;
+	fil << regninger->no_of_elements() << endl;	
+	for(int x = 1; x <= regninger->no_of_elements(); x++){
+		temp = (Regning*)regninger->remove_no(x);
+		regninger->add(temp);
+		temp->tofile(fil);
+	}
+
+
+}
+
+//skriver data. hvis all skriver også data om alle regninger
+void Reservasjon::display(bool all){
+
+		//skriver ut data.
+	cout << "\n\nReservasjon tilhørende: " << navn[0] << endl;
+	cout << "Fra " << number << " til " << avreise << " ("
+		 << overnattinger << " dager)" << endl;
+
+	//hvis all og det finnes regninger
+	if(all && regninger->no_of_elements()){
+		cout << "\nfølgende regninger: " << endl;
+		regninger->display_list();
+	}
+
+}
+
+
+//henter navn
+string Reservasjon::getNavn(){
+	return navn[0];
+}
+
+
+//henter avreise
+int Reservasjon::getAvreise(){
+	return avreise;
+}
+
+//henter ankomst
+int Reservasjon::getAnkomst(){
+	return number;
+}
+
+//sammenligner navn med input tekst.
+bool Reservasjon::compNavn(string txt){
+	return txt.compare(navn[0]);
+}
+
+//setter data
+void Reservasjon::setAnkomst(int ny)
+{
+	number = ny;
+	overnattinger = timer.forskjell_datoer(number, avreise);
+	for (int i = 0; i <= overnattinger; i++){
+
+		//må endres til å bruke pris objekt.
+		pris[i] = timer.ukedagsnr(number+i);
+	}
+}
+
+void Reservasjon::setAvreise(int ny)
+{
+	avreise = ny;
+	overnattinger = timer.forskjell_datoer(number, avreise);
+	for (int i = 0; i <= overnattinger; i++){
+
+		//må endres til å bruke pris objekt.
+		pris[i] = timer.ukedagsnr(number+i);
+	}
+}
+
+void Reservasjon::addRegning()
+{
+	Reg_Post* regpost = new Reg_Post();
+	Regning* tempRegning;
+	char kommando;
+	int pris;
+	string beskrivelse;
+	
+	cout << "\nHvaslags regning ønsker du å legge til?" << endl;
+	regpost->display();
+	cout << regpost->getAntall() + 1 << " - Selvdefinert";
+
+	kommando = les(true);
+
+	//Hvis kommando har beskrivelse
+	if (kommando >= 1 && kommando <= regpost->getAntall())
+	{
+		cout << "\n Hvor mye koster det (kr)?: ";
+		cin >> pris;
+		beskrivelse = regpost->beskrivelse(kommando);
+
+		//lag ny regning
+		tempRegning = new Regning(pris, beskrivelse);
+		regninger->add(tempRegning);
+	}
+	else if (kommando == regpost->getAntall() + 1)
+	{
+		beskrivelse = les("Hva er regningen for?");
+		cout << "\n Hvor mye koster det (kr)?: ";
+		cin >> pris;
+
+		//lag ny regning
+		tempRegning = new Regning(pris, beskrivelse);
+		regninger->add(tempRegning);
+	}
+	else
+	{
+		cout << "ERROR";
+	}
+	
+}
+
+void Reservasjon::utskjekking(ofstream &fil)
+{
+	int sum = 0;
+	Regning* tempReg;
+
+	int romleie = 0;
+	for (int i = 0; i < overnattinger; i++)
+	{
+		romleie += pris[i];
+		sum += pris[i];
+	}
+
+	cout << "Navn:\t" << navn[0] << endl
+		 << "Annkomst:\t" << number << endl
+		 << "Avreise:\t" << avreise << endl
+		 << "Beboere:\t" << beboere << endl
+		 << "Romleie (kr):\t" << romleie << endl << endl
+		 << "Andre regninger:" << endl;
+
+	fil << "Navn:\t" << navn[0] << endl
+		<< "Annkomst:\t" << number << endl
+		<< "Avreise:\t" << avreise << endl
+		<< "Beboere:\t" << beboere << endl
+		<< "Romleie (kr):\t" << romleie << endl << endl
+		<< "Andre regninger:" << endl;
+
+	int antRegninger = regninger->no_of_elements();
+
+	//for alle regninger, skriv dem ut.
+	for (int i = 1; i <= antRegninger; i++)
+	{
+		tempReg = (Regning*)regninger->remove();
+		tempReg->display();
+		tempReg->tofile(fil);
+	}
+
+	cout << endl << "Total:\t\t" << sum << endl;
+
+	fil << endl << "Total:\t\t" << sum << endl << endl << endl;
+}
+
+void Reservasjon::innsjekk()
+{
+	//les inn alle navn.
+	for (int x = 1; x < beboere; x++)
+	{
+		navn[x] = les("\nNavnet på beboer");
+	}
+}
+
+//Regning.cpp
+//
+//
+//
+#include "Header.h"
+
+using namespace std;
+
+
+//constructor
+Regning::Regning(int ID, ifstream &fil):Num_element(ID){
+
+	fil.ignore();
+	getline(fil, info);
+}
+
+Regning::Regning(int ID, string input):Num_element(ID)
+{
+	info = input;
+}
+
+//skriver til fil
+void Regning::tofile(ofstream &fil){
+
+	fil << number << " " << info << endl;
+}
+
+//viser data på skjerm.
+void Regning::display(){
+
+	cout << info << " - " << number << endl;
+}
+
+//Reg_Post.cpp
+//
+//
+//
+#include "Header.h"
+
+
+using namespace std;
+
+
+//oppretter Reg_post objekt.
+Reg_Post::Reg_Post(){
+
+	int temp = 0;
+
+	//leser fra fil
+	ifstream fil ("Reg_Post.DTA");
+	if (fil){
+		do{
+			getline(fil, poster[++temp]);
+
+		}while (!fil.eof());
+	}
+
+	//antallet elementer
+	antall = temp;
+}
+
+
+//skirver info til skjermen.
+void Reg_Post::display(){
+
+	for(int x = 1; x <= antall; x++){
+		cout << x << " - " << poster[x] << endl;
+	}
+}
+
+int Reg_Post::getAntall()
+{
+	return antall;
+}
+
+//sender tilbake beskrivelden, eller "" hvis no ikke finnes.
+string Reg_Post::beskrivelse(int no)
+{
+	if (no <= antall && no >= 0)
+	{
+		return poster[no];
+	}
+	else
+	{
+		return "";
+	}
+}
+
+//Pris.cpp
+//
+//
+//
+#include "Header.h"
+
+extern Timer timer;
+
+Pris::Pris(string file)
+{
+	ifstream fil;
+	fil.open(file+".PRS");
+	string crap; //variabel for å lese inn unødvendig 'crap' som bare er der for å gjøre filen mer lesbar
+
+	if(fil)
+	{
+		//leser inn normale priser.
+		fil >> crap >> crap >> ukedag[0];
+		fil >> crap >> ukedag[1];
+		fil >> crap >> ukedag[2];
+		
+		fil >> crap >> crap >> helg[0];
+		fil >> crap >> helg[1];
+		fil >> crap >> helg[2];
+
+		fil >> crap >> antPerioder;
+
+		//for alle perioder
+		for (int i = 0; i < antPerioder; i++)
+		{
+			//leser inn tilbudsdata
+			fil >> crap >> startdato[i] >> crap >> sluttdato[i];
+			fil >> crap >> crap >> tilbudspris[i][0];
+			fil >> crap >> tilbudspris[i][1];
+			fil >> crap >> tilbudspris[i][2];
+		}
+	}
+	else
+	{
+		cout << "\n\nPrisfil ikke funnet " << file << ".PRS" << endl;
+	}
+	fil.close();
+}
+
+//returnerer prisen for gjeldende dato og romtype.
+float Pris::getPris(int dato, int romtype)
+{
+	bool funnet = false;
+	int dagnr;
+
+	for (int i = 0; i < antPerioder; i++)
+	{
+		if (dato >= startdato[i] && dato <= sluttdato[i])
+		{
+			//hvis det finnes en tilbudspris for perioden
+			funnet = true;
+
+			return tilbudspris[i][romtype];
+		}
+	}
+
+	if (!funnet)
+	{
+		dagnr = timer.ukedagsnr(dato);
+		//hvis det ikke er en helg
+		if (dagnr != 5 && dagnr != 6)
+		{
+			return ukedag[romtype];
+		}
+		else
+		{
+			return helg[romtype];
+		}
+	}
+}
+
+//Main.cpp
+//
+//
+//
+//Gruppe 9
+
+#include "Header.h"
+
+using namespace std;
+
+//globale Hotell, Timer og Reg_post objekt
+Hotell *hotell;
+Timer timer;
+Reg_Post regpost;
+
+
+int main(){
+
+	//setter vinduets størrelse og plassering.
+	//(nødvendig ettersom menyen er større enn standardvinduet)
+	RECT desktopRect; //størrelsen på skrivebordet
+	GetWindowRect(GetDesktopWindow(), &desktopRect); //henter størrelsen på skrivebordet
+	HWND console = GetConsoleWindow(); //vinduet
+
+	//flytter vinduet til midten av hovedskjermen (den hvor man har start bar) og gir det størrelse 670*desktophøyde-120
+	MoveWindow(console, desktopRect.right/2 - 335, 60, 670, desktopRect.bottom - 120, true);
+
+	char kommando;
+
+	//setter vindusnavnet
+	SetConsoleTitle("Resepsjonsapp");
+		
+	//begynner med å åpne ett hotell.
+	//Dummy og test er eneste med data atm.
+	hotell = new Hotell(getfil());
+
+	//setter vindusnavnet
+	SetConsoleTitle(("Resepsjonsapp: " + hotell->getNavn()).c_str());
+	
+
+	do{
+
+		menu();
+		switch(kommando = les(false)){
+
+				//utfører en reservasjon.
+			case 'B': 
+				hotell->reserver();
+				break;
+
+				//avbestiller reservajsoner, basert på navn
+			case 'A':
+				hotell->avbestille(les("\nI hvilket navn står reservasjonen: "));
+				break;
+
+			case 'I': 
+				hotell->skrivReservasjon();
+
+				break;
+
+			case 'U':
+				hotell->utskjekking();
+				break;
+
+			case 'R':
+				hotell->addRegning();
+				break;
+
+				//skriver data til fil.
+			case 'T': 
+				hotell->tilfil();
+				break;
+
+				//sletter hotell objektet og oppretter et nytt et.
+			case 'H':
+				delete hotell;
+				hotell = new Hotell(getfil());
+				//endrer vinduets navn
+				SetConsoleTitle(("Resepsjonsapp: " + hotell->getNavn()).c_str());
+				break;
+
+			case 'E':
+				cout << " ";
+				switch(kommando = les(true)){
+					//endre annkomst og/eller avreisedato før innsjekking
+					case '1':
+						do
+						{
+							kommando = les(true);
+						} while (!(kommando >= 1 || kommando <= 3));
+
+						hotell->endre(kommando);
+						break;
+
+						//endre avreisedato etter innsjekking
+					case '2':
+						hotell->endre(2);
+						break;
+
+						//bytte rom
+					case '3':
+						hotell->byttRom();
+						break;
+
+					default:
+						cout << "\nUgyldig kommando\n";
+						break;
+				}
+				break;
+
+			case 'O':
+				cout << " ";
+				switch (kommando = les(true)){
+
+						//viser data om hotellet.
+					case '1':
+						hotell->display();
+						break;
+
+						//viser data om alle suitene
+					case '2':
+						hotell->displaySuite();
+						break;
+
+						//Viser data over alle reservasjoner under ett gitt navn
+					case '3':
+						hotell->displayResEier();
+						break;
+
+						//Viser data om når ett rom er ledig
+					case '4':
+						hotell->ledigTidRom();
+						break;
+
+						//Viser data om ett gitt hotellrom.
+					case '5':
+						hotell->displayrom();
+						break;
+
+						//Viser data om alle data om rommets nåværende beboer
+					case '6':
+						hotell->displayOkkupant();
+						break;
+
+						//Viser data om alle ledige rom av en gitt type i en gitt tidsperiode
+					case '7':
+						cout << ' ';
+						kommando = les(true);
+						kommando--;
+
+						if (kommando <= '2' && kommando >= '0')
+						{
+							hotell->ledigeRom(kommando - '0');
+						}
+						else
+						{
+							cout << "\nUgyldig kommando\n";
+						}
+						break;
+
+
+					default:
+						cout << "\nUgyldig kommando\n";
+						break;
+
+				}
+				break;
+
+			default:
+				cout << "\nUgyldig kommando\n";
+				break;
+
+		}
+	} while (kommando != 'Q');
+
+
+	cout << "\n\nAvslutter program..." << endl;
+	system("PAUSE");
+	return 0;
+
+}
+
+//Hotell.cpp
+//
+//
+//
+
+
+
+#include "Header.h"
+
+using namespace std;
+
+extern Timer timer;
+
+//Skriver ut data om hotellet.
+void Hotell::display(){
+
+	cout << "\n\n" << navn << endl;
+	cout << "Kontakt" << endl;
+	cout << "\tTelefon: " << telefon << endl;
+	cout << "\tFax: " << fax << endl;
+	cout << "\tPostaddresse: " << addresse << " " << postnummer << endl;
+
+	cout << "\nFascilliteter" << endl;
+	for (int x = 1; x <= antFascilliteter; x++){
+		cout << "\t" << fascilliteter[x] << endl;
+	}
+	cout << "\n\n";
+	_getch();
+	
+}
+
+
+
+//skriver ut data om suitene.
+void Hotell::displaySuite(){
+
+	Suite *tempSuite;
+
+	for (int x = 1; x <= rom[2]->no_of_elements(); x++){
+
+		tempSuite = (Suite*)rom[2]->remove_no(x);
+		rom[2]->add(tempSuite);
+		tempSuite->display();
+	}
+
+	_getch();
+}
+
+
+
+//Hotell leser selv inn data fra fil.
+Hotell::Hotell(string file){
+	
+	//Lagrer filnavnet
+	filnavn = file;
+
+	//henter filen
+	ifstream fil (file+".DTA");
+	if(fil){
+
+		//navnet på hotellet
+		getline(fil, navn);
+	
+		//postnummer og addresse
+		fil >> postnummer; fil.ignore();
+		getline(fil, addresse);
+	
+		//telefon fax og mail
+		fil >> telefon >> fax; fil.ignore();
+		getline(fil, mail);
+
+		//priser for frokost og seng samt antallet fascilliteter
+		fil >> frokost >> seng >> antFascilliteter;
+		fil.ignore();
+
+		for (int x = 1; x <= antFascilliteter; x++){
+			getline(fil, fascilliteter[x]);
+		}
+
+		//masse variabler som brukes til å mellomlagre data.
+		int trash;
+		int ID;
+		Singel *tempSingel;
+		Dobbel *tempDobbel;
+		Suite  *tempSuite;
+
+		for(int y = 0; y < 3; y++){
+
+			//oppretter liste for romtypene
+			//og leser inn antallet rom av gitt type
+			rom[y] = new List(Sorted);
+			fil >> trash;
+			for (int x = 1; x <= trash; x++){
+
+				//romnummer
+				fil >> ID;
+
+				//oppretter objekt og stapper det inn i gitt liste
+				if(y == 0){
+					tempSingel = new Singel(ID, fil);
+					rom[y]->add(tempSingel);
+				}
+				
+				else if (y == 1){
+					tempDobbel = new Dobbel(ID, fil);
+					rom[y]->add(tempDobbel);
+				}
+				
+				else if (y == 2){
+					tempSuite = new Suite (ID, fil);
+					rom[y]->add(tempSuite);
+				}
+
+			}
+		}
+
+	}
+}
+
+
+//dekonstructoren gjør ikke noe mer spennende enn å
+//skrive til fil atm. Bør sikkert slette div objekter.
+Hotell::~Hotell(){
+
+	tilfil();
+
+}
+
+
+//skriver data til fil.
+void Hotell::tilfil(){
+
+	//filnavnet er egen variabel.
+	ofstream fil (filnavn+".DTA");
+
+	//Statisk data
+	fil << navn << endl;
+	fil << postnummer << " " << addresse << endl;
+	fil << telefon << " " << fax << " " << mail << endl;
+	fil << frokost << " " << seng << " " << antFascilliteter << endl;
+
+	//beskrivelse av fascillitetene.
+	for(int x = 1; x <= antFascilliteter; x++){
+		fil << fascilliteter[x] << endl;
+	}
+
+
+	for(int y = 0; y < 3; y++){
+
+		//data om alle rom skriver seg selv.		
+		Singel *tempSingel;
+		Dobbel *tempDobbel;
+		Suite  *tempSuite;
+		
+		fil << rom[y]->no_of_elements() << endl;
+		for (int x = 1; x <= rom[y]->no_of_elements(); x++){
+
+			if(y == 0){
+				tempSingel = (Singel*)rom[y]->remove_no(x);
+				rom[y]->add(tempSingel);
+				tempSingel->toFile(fil);
+			}
+
+			else if (y == 1){
+				tempDobbel = (Dobbel*)rom[y]->remove_no(x);
+				rom[y]->add(tempDobbel);
+				tempDobbel->toFile(fil);
+			}
+
+			else if (y == 2){
+				tempSuite = (Suite*)rom[y]->remove_no(x);
+				rom[y]->add(tempSuite);
+				tempSuite->toFile(fil);
+			}
+
+			fil << endl;
+		}
+
+	}
+
+}
+
+
+//opprette en reservasjon
+void Hotell::reserver(){
+
+	//hjelpevariabler
+	int temp;
+	int fra;
+	int til;
+	int ant;
+
+	//leser inn romtype
+	do{
+		cout << "\n\t1 - Singelrom";
+		cout << "\n\t2 - Dobbeltrom";
+		cout << "\n\t3 - Suite\n\n";
+
+		//konverterer fra char til int, -1
+		temp = les(true)-49;
+
+	}while(temp != 0 && temp != 1 && temp != 2);
+
+	//leser ankomst og avreise dato.
+	fra = getdate("\nFra dato", timer.hent_dato());
+	til = getdate("Til dato", fra);
+	
+	//antallet gjester.
+	cout << "Antall gjester: ";
+	cin >> ant;
+
+	//midlertidige objekter.
+	Rom *tempRom;
+	List *list;
+	Reservasjon *res;
+	Reservasjon *tempRes1;
+	Reservasjon *tempRes2;
+
+	//for alle rommene
+	for(int x = 1; x <= rom[temp]->no_of_elements(); x++){
+
+		//henter ett rom fra listen
+		tempRom = (Rom*)rom[temp]->remove_no(x);
+		rom[temp]->add(tempRom);
+
+		//Dersom det er plass på rommet.
+		if(tempRom->getsenger() >= ant){
+
+			//henter listen over reservasjoner, og går igjennom den
+			list = (List*)tempRom->getlist();
+			for(int y = 1; y <= list->no_of_elements(); y++){
+
+				//henter reservasjoner
+				tempRes1 = (Reservasjon*)list->remove_no(y);
+				list->add(tempRes1);
+
+				//sett at reservasjonen har dratt før ny ankomst
+				if(tempRes1->getAvreise() <= fra){
+
+					//dersom det er siste reservasjon, registreres ny
+					if(y == list->no_of_elements()){
+						res = new Reservasjon(fra, til, ant, filnavn, temp);
+						list->add(res);
+
+						//for å bryte ut av for-løkkene
+						x = rom[temp]->no_of_elements()+1;
+						y = list->no_of_elements()+1;
+
+					}
+					//dersom det er flere reservasjoner
+					else{
+
+						//neste reservasjon hentes
+						tempRes2 = (Reservasjon*)list->remove_no(y+1);
+						list->add(tempRes2);
+
+						//det sjekker om denne ankommer før reservasjonen
+						//som skal registreres reiser, registreres ny.
+						if(tempRes2->getAnkomst() >= til){
+							res = new Reservasjon(fra, til, ant, filnavn, temp);
+							list->add(res);
+
+							//for å bryte ut av for-løkkene
+							x = rom[temp]->no_of_elements()+1;
+							y = list->no_of_elements()+1;
+						}
+
+					}
+
+				}
+
+			}
+
+			//dersom listen er tom for reservasjoner registreres ny
+			if (!list->no_of_elements()){
+				res = new Reservasjon(fra, til, ant, filnavn, temp);
+				list->add(res);
+
+				//bryte ut av for-løkken
+				x = rom[temp]->no_of_elements()+1;
+			}
+
+
+		}
+	}
+
+	//feilmelding dersom det ikke finnes noe ledig.
+	if(!rom[temp]->no_of_elements()){
+		cout << "\n\nDesverre ingen ledige rom i den perioden" << endl;
+	}
+}
+
+
+//skriver ut reservasjon(er) med gitt navn og dato.
+void Hotell::skrivReservasjon()
+{
+	//leser innskjekkerens navn.
+	string navnet = les("\nHva er innsjekkerens navn?");
+	int dato = timer.hent_dato();
+	Rom *temp;
+	bool funnetRom = false;
+
+	//går igjennom alle rom i hotellet.
+	for (int x = 0; x < 3; x++)
+	{
+		for (int y = 1; y <= rom[x]->no_of_elements(); y++)
+		{
+			//henter ut rommet
+			temp = (Rom*)rom[x]->remove_no(y);
+
+
+			//finner ut om det er reservert rom for dato i navn.
+			if (temp->finnReservasjon(navnet, dato) && !funnetRom)
+			{
+				cout << temp->getid() << endl; //denne skal byttes ut med finere løsning.
+				funnetRom = true; //setter permanent merke på om rum er funnet.
+
+				temp->innsjekk(navnet, timer.hent_dato());
+			}
+			rom[x]->add(temp);
+		}
+	}
+
+	if (!funnetRom)
+	{
+		cout << "Ingen reservasjon for dagens dato" << endl;
+	}
+}
+
+
+
+//skriver ut data om ett romnummer
+void Hotell::displayrom(){
+
+	//leser romnummer
+	int trash;
+	cout << "\nRomnummer: ";
+	cin >> trash;
+
+	//går igjennom alle rom i hotellet.
+	Rom *temp;
+	for (int x = 0; x < 3; x++){
+		for(int y = 1; y <= rom[x]->no_of_elements(); y++){
+			
+			//henter ut rommet
+			temp = (Rom*)rom[x]->remove_no(y);
+			rom[x]->add(temp);
+
+			//dersom det er korrekt vises data.
+			if (temp->getid() == trash){
+				temp->display(true);
+			}
+		}
+	}
+
+	_getch();
+}
+
+
+
+void Hotell::avbestille(string txt){
+
+	Rom* tempRom;
+	List *tempList;
+	Reservasjon *tempRes;
+
+	//Alle romtypene
+	for(int x = 0; x < 3; x++){
+
+		//alle rommene
+		for (int y = 1; y <= rom[x]->no_of_elements(); y++){
+
+			//henter ut rom.
+			tempRom = (Rom*)rom[x]->remove_no(y);
+			rom[x]->add(tempRom);
+
+			//henter listen over reservasjoner.
+			tempList = (List*)tempRom->getlist();
+
+			//alle reservasjonene til ett rom.
+			for (int z = 1; z <= tempList->no_of_elements(); z ++){
+
+				//henter ut reservasjonen
+				tempRes = (Reservasjon*)tempList->remove_no(z);
+
+				//dersom det stemmer
+				if (!tempRes->compNavn(txt)){
+
+					//skriver ut reservasjonen og spør om den skal fjernes.
+					tempRom->display(false);
+					tempRes->display(false);
+					if(!confirm("\nVil du fjerne?")){
+						tempList->add(tempRes);
+					}
+					//dersom det fjernes minker z, for å kompensere for
+					//fjernet reservasjon.
+					else (z--);
+				}
+				//dersom det ikke stemmer legges reservasjonen tilbake.
+				else {
+					tempList->add(tempRes);
+				}
+			}
+		}
+	}
+}
+
+void Hotell::displayResEier()
+{
+	Rom* tempRom;
+	List* tempList;
+	Reservasjon* tempRes;
+
+	string navn = les("Eierens navn:");
+
+	//for alle typer rom
+	for (int i = 0; i < 3; i++)
+	{
+		//for alle rom
+		for (int j = 1; j <= rom[i]->no_of_elements(); j++)
+		{
+			
+			tempRom = (Rom*)rom[i]->remove_no(j);
+			rom[i]->add(tempRom);
+
+			//henter listen over reservasjoner.
+			tempList = (List*)tempRom->getlist();
+
+			//alle reservasjonene til ett rom.
+			for (int k = 1; k <= tempList->no_of_elements(); k++)
+			{
+				tempRes = (Reservasjon*)tempList->remove_no(k);
+				tempList->add(tempRes);
+
+				if (navn == tempRes->getNavn())
+				{
+					cout << tempRom->getid() << ' ';
+				}
+			}
+		}
+	}
+
+	cout << endl;
+}
+
+void Hotell::displayOkkupant()
+{
+	Rom* tempRom;
+	List* tempList;
+	Reservasjon* tempRes;
+	bool funnetNr = false;
+	bool funnetRes = false;
+
+	int romNr;
+	cout << "Ronmummer: ";
+	cin >> romNr;
+
+	//for alle typer rom
+	for (int i = 0; i < 3; i++)
+	{
+		//for alle rom
+		for (int j = 1; j <= rom[i]->no_of_elements(); j++)
+		{
+			
+			tempRom = (Rom*)rom[i]->remove_no(j);
+			rom[i]->add(tempRom);
+
+			if (tempRom->getid() == romNr)
+			{
+				funnetNr = true;
+
+				//henter listen over reservasjoner.
+				tempList = (List*)tempRom->getlist();
+				
+				//alle reservasjonene til ett rom.
+				for (int k = 1; k <= tempList->no_of_elements(); k++)
+				{
+					tempRes = (Reservasjon*)tempList->remove_no(k);
+					tempList->add(tempRes);
+					
+					//hvis det er en reservasjon for dagens dato.
+					if (timer.hent_dato() <= tempRes->getAvreise() && timer.hent_dato() >= tempRes->getAnkomst())
+					{
+						funnetRes = true;
+						tempRes->display(true);
+					}
+				}
+			}
+		}
+	}
+
+	//hvis rommet eller reservasjonen ikke er funnet
+	if (!funnetNr)
+	{
+		cout << "Romnummer ikke funnet" << endl;
+	}
+	else if (!funnetRes)
+	{
+		cout << "Ingen reservasjon i dag" << endl;
+	}
+}
+
+void Hotell::ledigeRom(int nr)
+{
+	//midlertidlige variabler
+	Rom* tempRom;
+	List* tempResList;
+	Reservasjon* tempRes;
+	bool opptatt = false;
+
+	//hvilket tidsrom vil du finne?
+	int minDate = getdate("\nFra dato: ", timer.hent_dato());
+	int maxDate = getdate("\nTil dato: ", minDate);
+
+	//for alle rom av typen 'nr'
+	for (int i = 1; i <= rom[nr]->no_of_elements(); i++)
+	{
+		tempRom = (Rom*)rom[nr]->remove_no(i);
+		rom[nr]->add(tempRom);
+
+		tempResList = (List*)tempRom->getlist();
+
+		//for alle reservasjoner
+		for (int j = 1; j <= tempResList->no_of_elements(); j++)
+		{
+			tempRes = (Reservasjon*)tempResList->remove_no(j);
+			tempResList->add(tempRes);
+
+			//hvis reservasjonen gjelder for 
+			if (!(maxDate < tempRes->getAnkomst() || minDate > tempRes->getAvreise()))
+			{
+				opptatt = true;
+			}
+		}
+		//hvis dette rommet ikke er opptatt
+		if (!opptatt)
+		{
+			//skriv ut romnr
+			cout << tempRom->getid() << ' ';
+		}
+	}
+}
+
+string Hotell::getNavn()
+{
+	return navn;
+}
+
+void Hotell::ledigTidRom()
+{
+	int romNr;				//rommet du vil ha
+	bool funnet = false;	//er rommet funnet
+	Rom* tempRom;
+	List* tempList;
+	Reservasjon* tempRes;
+
+	cout << "Hvilket romnummer?" << endl;
+	cin >> romNr;
+
+	//Alle romtypene
+	for(int i = 0; i < 3; i++)
+	{
+		//Alle rommene
+		for (int j = 1; j <= rom[i]->no_of_elements(); j++)
+		{
+			tempRom = (Rom*)rom[i]->remove_no(j);
+			rom[i]->add(tempRom);
+
+			//hvis rommet er riktig
+			if (romNr == tempRom->getid())
+			{
+				tempList = tempRom->getlist();
+				funnet = true;
+				cout << "\nRommet er opptatt i perioden(e):\n";
+
+				//hvis det ikke er noen reservasjoner
+				if (tempList->no_of_elements() == 0)
+				{
+					cout << "Ingen reservasjoner" << endl;
+				}
+				else
+				{
+					//For alle reservasjonene
+					for (int k = 1; k <= tempList->no_of_elements(); k++)
+					{
+						tempRes = (Reservasjon*)tempList->remove_no(k);
+						tempList->add(tempRes);
+						
+						cout << '\t' << tempRes->getAnkomst() << "\t-\t" << tempRes->getAvreise() << endl;
+					}
+				}
+			}
+		}
+	}
+
+	//hvis rommet er funnet
+	if (!funnet)
+	{
+		cout << "Romnummer ikke funnet." << endl;
+	}
+}
+
+//endrer info etter type (1=annkomst, 2=avreise, 3 = begge)
+void Hotell::endre(int type)
+{
+	bool funnet = false;	//er rommet funnet
+	Rom* tempRom;
+	List* tempList;
+	Reservasjon* tempRes;
+
+	string eier = les("Romeier:");
+	int origAnkomst = getdate("\nOriginal ankomst", timer.hent_dato());
+
+	for (int i = 0; i < 3; i++)
+	{
+		//for alle rom
+		for (int j = 1; j <= rom[i]->no_of_elements(); j++)
+		{
+			
+			tempRom = (Rom*)rom[i]->remove_no(j);
+
+			//henter listen over reservasjoner.
+			tempList = (List*)tempRom->getlist();
+			
+			//alle reservasjonene til ett rom.
+			for (int k = 1; k <= tempList->no_of_elements(); k++)
+			{
+				tempRes = (Reservasjon*)tempList->remove_no(k);
+				
+				//hvis det er en reservasjon for dagens dato.
+				if (origAnkomst == tempRes->getAnkomst())
+				{
+					funnet = true;
+					cout << "\nRomnummer: " << tempRom->getid() << endl;
+					tempRes->display(false);
+
+					if (confirm("\nVil du endre denne reservasjonen?"))
+					{
+						if (type == 1 || type == 3)
+						{
+							//endrer avreisen
+							tempRes->setAnkomst(getdate("\nNy ankomst", timer.hent_dato()));
+						}
+						if (type == 2 || type == 3)
+						{
+							//endrer avreisen
+							tempRes->setAvreise(getdate("\nNy avreise", timer.hent_dato()));
+						}
+						
+					}
+				}
+				//setter tilbake
+				tempList->add(tempRes);
+				tempRom->replaceList(tempList);
+			}
+			rom[i]->add(tempRom);
+		}
+	}
+	if (!funnet)
+	{
+		cout << "\nReservasjon ikke funnet" << endl;
+	}
+}
+
+//bytter rom
+void Hotell::byttRom()
+{
+	bool funnet = false;	//er rommet funnet
+	bool brukt = false;
+	Rom* tempRom1;
+	List* tempList1;
+	Reservasjon* tempRes1;
+	Rom* tempRom2;
+	List* tempList2;
+	Reservasjon* tempRes2;
+	int romNr1;
+	int romNr2;
+	int x;
+	int y;
+	int z;
+
+	cout << "\nHvilket romnummer vil du flytte fra? ";
+	cin >> romNr1;
+
+	int ankomst = getdate("\nAnkomst", timer.hent_dato());
+
+	
+	for (int i = 0; i < 3; i++)
+	{
+		//for alle rom
+		for (int j = 1; j <= rom[i]->no_of_elements(); j++)
+		{
+			tempRom1 = (Rom*)rom[i]->remove_no(j);
+			rom[i]->add(tempRom1);
+
+			if (tempRom1->getid() == romNr1)
+			{
+				//henter listen over reservasjoner.
+				tempList1 = (List*)tempRom1->getlist();
+				
+				//alle reservasjonene til ett rom.
+				for (int k = 1; k <= tempList1->no_of_elements(); k++)
+				{
+					tempRes1 = (Reservasjon*)tempList1->remove_no(k);
+					tempList1->add(tempRes1);
+
+					if (tempRes1->getAnkomst() == ankomst)
+					{
+						funnet = true;
+						x = i;
+						y = j;
+						z = k;
+					}
+				}
+			}
+		}
+	}
+
+	if (!funnet)
+	{
+		cout << "\nReservasjon ikke funnet." << endl;
+	}
+	else
+	{//sett inn i nytt rom
+		
+		cout << "\nHvilket romnummer vil du flytte til? ";
+		cin >> romNr2;
+
+		for (int i = 0; i < 3; i++)
+		{
+			//for alle rom
+			for (int j = 1; j <= rom[i]->no_of_elements(); j++)
+			{
+				tempRom2 = (Rom*)rom[i]->remove_no(j);
+				rom[i]->add(tempRom2);
+
+				tempList2 = (List*)tempRom2->getlist();
+
+				if (tempRom2->getid() == romNr2)
+				{
+
+					//alle reservasjonene til ett rom.
+					for (int k = 1; k <= tempList1->no_of_elements(); k++)
+					{
+						tempRes2 = (Reservasjon*)tempList2->remove_no(k);
+						tempList2->add(tempRes2);
+	
+						if (!(tempRes1->getAvreise() < tempRes2->getAnkomst() || tempRes1->getAnkomst() > tempRes2->getAvreise()))
+						{
+							brukt = true;
+						}
+					}
+				}
+			}
+			if (!brukt)
+			{
+				//for alle rom
+				for (int j = 1; j <= rom[i]->no_of_elements(); j++)
+				{
+					tempRom2 = (Rom*)rom[i]->remove_no(j);
+		
+					if (tempRom2->getid() == romNr2)
+					{
+						//henter listen over reservasjoner.
+						
+						//legger til reservasjonen.
+						tempList2->add(tempRes1);
+						tempRom2->replaceList(tempList2);
+	
+						//fjerner reservasjonen fra det gamle rommet.
+						tempList1->destroy(z);
+						tempRom1->replaceList(tempList1);
+						rom[x]->destroy(y);
+						rom[x]->add(tempRom1);
+					}
+					rom[i]->add(tempRom2);
+				}
+			}
+		}
+	}
+
+	if (brukt)
+	{
+		cout << "\nDet rommet er opptatt." << endl;
+	}
+}
+
+
+void Hotell::utskjekking()
+{
+	//filnavnet er egen variabel.
+	ofstream fil;
+	fil.open(filnavn+".HST");
+	string navn;
+
+	Rom* tempRom;
+	List* tempList;
+	Reservasjon* tempRes;
+
+	bool funnet = false;
+
+
+	navn = les("\nUtskjekkers navn:");
+
+	//for alle rom
+	for (int x = 0; x < 3; x++)
+	{
+		for (int y = 1; y <= rom[x]->no_of_elements(); y++)
+		{
+			//henter ut rommet
+			tempRom = (Rom*)rom[x]->remove_no(y);
+			rom[x]->add(tempRom);
+
+			tempList = tempRom->getlist();
+
+			for (int z = 1; z <= tempList->no_of_elements(); z++)
+			{
+				tempRes = (Reservasjon*)tempList->remove_no(z);
+
+				//hvis den er riktig
+				if (navn == tempRes->getNavn() && timer.hent_dato() == tempRes->getAvreise())
+				{
+					funnet = true;
+
+					tempRes->utskjekking(fil);
+				}
+				else
+				{ //hvis det ikke er riktig reservasjon, sett den tilbake.
+					tempList->add(tempRes);
+				}
+			}
+		}
+	}
+
+	fil.close();
+}
+
+void Hotell::addRegning()
+{
+	int romNr;				//rommet du vil ha
+	bool funnet = false;	//er rommet funnet
+	Rom* tempRom;
+	List* tempList;
+	Reservasjon* tempRes;
+
+	cout << "Hvilket romnummer?" << endl;
+	cin >> romNr;
+
+	//Alle romtypene
+	for(int i = 0; i < 3; i++)
+	{
+		//Alle rommene
+		for (int j = 1; j <= rom[i]->no_of_elements(); j++)
+		{
+			tempRom = (Rom*)rom[i]->remove_no(j);
+
+			//hvis rommet er riktig
+			if (romNr == tempRom->getid())
+			{
+				tempList = tempRom->getlist();
+				//for alle reservasjoner
+				for (int j = 0; j < tempList->no_of_elements(); j++)
+				{
+					tempRes = (Reservasjon*)tempList->remove_no(j);
+					if (tempRes->getAnkomst() <= timer.hent_dato() && tempRes->getAvreise() >= timer.hent_dato())
+					{
+						funnet = true;
+						//legg inn ting.
+						tempRes->addRegning();
+						tempList->add(tempRes);
+						tempRom->replaceList(tempList);
+					}
+				}
+			}
+			rom[i]->add(tempRom);
+		}
+	}
+}
+
+//Global.cpp
+//
+//
+//
+//Globale funksjoner
+
+
+#include "Header.h"
+
+using namespace std;
+
+extern Timer timer;
+
+
+//meget selvforklarende, skriver menyen...
+void menu(){
+
+	cout << "\nMenyvalg" << endl;
+	cout << "\tB - Bestille rom" << endl;
+	cout << "\tA - Avbestille rom" << endl;
+	cout << "\tI - Insjekking" << endl;
+	cout << "\tU - Utsjekking" << endl;
+	cout << "\tR - Registrere regning" << endl;
+
+	cout << "\tE - Endre" << endl;
+	cout << "\t\t1 - Ankomst og/eller Avreise før insjekking" << endl;
+	cout << "\t\t\t1 - Ankomst" << endl;
+	cout << "\t\t\t2 - Avreise" << endl;
+	cout << "\t\t\t3 - Ankomst og avreise" << endl;
+	cout << "\t\t2 - Avreise etter innsjekking." << endl;
+	cout << "\t\t3 - Rom" << endl;
+
+	cout << "\tO - Oversikt" << endl;
+	cout << "\t\t1 - Data over hotellet" << endl;
+	cout << "\t\t2 - Beskrivelse av alle suitene" << endl;
+	cout << "\t\t3 - Over alle reservasjoner under ett gitt navn" << endl;
+	cout << "\t\t4 - Når ett rom er ledig" << endl;
+	cout << "\t\t5 - Alle reservasjoner for ett rom." << endl;
+	cout << "\t\t6 - Alle data om rommets nåværende beboer" << endl;
+	cout << "\t\t7 - Alle ledige rom av en gitt type i en gitt tidsperiode" << endl;
+	cout << "\t\t\t1 - Enkelt" << endl;
+	cout << "\t\t\t2 - Dobbeltelt" << endl;
+	cout << "\t\t\t3 - Suite" << endl;
+
+	cout << "\tT - Skrive data til fil" << endl;
+	cout << "\tH - Bytte hotell" << endl;
+
+	cout << "\n\tQ - Avslutte programmet";
+
+	cout << "\n\nKommando: ";
+}
+
+
+//leser ett tegn, og en bool for om det er tall eller bokstav.
+char les(bool type){
+
+	//div variabler som brukes
+	char trash;
+	int x;
+	int y;
+
+	//dersom type er satt som sann blir x og y satt til ascii
+	//verdiene som grenser til tall.
+	//og ascii verdiene til bokstaver ellers.
+	if(type){x = 48; y = 57;}
+	else{x = 65; y = 90;}
+	
+	//leser ett tegn til det er gyldig.
+	do{
+		trash = toupper(_getch());
+	}while ((trash < char(x) || trash > char(y)) &&  trash != 'Q' );
+
+	//skriver ut og returnerer tegnet.
+	cout << trash;
+	return trash;
+}
+
+
+//leser en tekststreng med gitt ledetekst.
+string les(const char txt[]){
+
+	string temp;
+
+	//skriver ut ledeteksten og leser strengen
+	//helt til strengen er lengre enn 1.
+
+	while (temp.length() < 1)
+	{
+		cout << txt << '\n';
+		getline(cin, temp);
+	}
+
+	return temp;
+}
+
+
+//henter navnet på filen til ett hotell.
+string getfil(){
+	
+	string filnavn;
+	string hotellnavn;
+	string input;
+	
+
+	
+	do{
+
+		//leser navnet på hotellet
+		//og åpner filen med navnene.
+		input = les("\nNavn på hotellet");
+		ifstream fil ("Hoteller.DTA");
+
+		do{
+
+			//for alle punktene leses forkortet navn
+			//og fult navn.
+			fil >> filnavn; fil.ignore();
+			getline(fil, hotellnavn);
+
+			//sammenligner fult navn med input.
+			//om like returneres filnavnet
+			if(!input.compare(hotellnavn)){
+				return filnavn;
+			}
+
+
+		//når filen slutter kommer en feilmelding.
+		}while (!fil.eof());
+		cout << "Ikke noe hotell som svarer til det navnet, prøv igjen." << endl;
+
+	//kjører forevur :D
+	}while (true);
+}
+
+
+//leser dato som er etter en gitt dato
+int getdate(string txt, int min){
+
+	int trash;
+	do{
+		cout << txt << " på formatet AAAAMMMDD: ";
+		cin >> trash;
+
+	}while (trash < min && !timer.dagnummer(trash));
+
+	return trash;
+}
+
+
+//Ja/Nei bare.
+bool confirm(const char txt[]){
+
+	char trash;
+	
+	cout << txt << " (Y/N) ";
+	do{
+		trash = toupper(_getch());
+	}while (trash != 'Y' && trash != 'N');
+
+	cout << trash;
+
+	if (trash == 'Y') return true;
+	else return false;
+}
+
+//Dobbel.cpp
+//
+//
+//
+#include "Header.h"
+
+using namespace std;
+
+
+
+
+
+Dobbel::Dobbel(int ID, ifstream &file):Rom(ID, file){
+	
+	file >> ekstraSeng; file.ignore();
+}
+
+
+
+void Dobbel::toFile(ofstream &file){
+
+	Rom::toFile(file);
+	file << " " << ekstraSeng;
+}
+
+
+
+void Dobbel::display(){
+	
+	Rom::display(false);
+
+	cout << "Det er ";
+	if (!ekstraSeng) cout << "ikke ";
+	cout << "mulighet for ekstra seng." << endl;
+}
+

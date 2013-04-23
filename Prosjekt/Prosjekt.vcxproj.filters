@@ -124,5 +124,8 @@
     <None Include="Reg_Post.DTA">
       <Filter>Resource Files</Filter>
     </None>
+    <None Include="Dummy.DTA.PRS">
+      <Filter>Resource Files</Filter>
+    </None>
   </ItemGroup>
 </Project>
